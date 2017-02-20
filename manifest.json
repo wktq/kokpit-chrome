@@ -1,0 +1,15 @@
+{
+  "name": "Blank new tab page",
+  "description": "Override the new tab page with a blank one",
+  "version": "0.2",
+  "incognito": "split",
+  "content_security_policy": "script-src 'self' https://*.gstatic.com https://*.firebaseio.com; object-src 'self'",
+  "content_scripts": [{
+    "js": ["main.js"],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "chrome_url_overrides": {
+    "newtab": "blank.html"
+  },
+  "manifest_version": 2
+}
