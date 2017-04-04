@@ -11,11 +11,9 @@ firebase.initializeApp(config);
 var tasksRef = firebase.database().ref('tasks/');
 tasksRef.on('value', function(data) {
   data.forEach(function(childData) {
-    console.log(childData.val().title);
+    //console.log(childData.val().title);
   });
 });
-
-
 
 $(function() {
   var user = JSON.parse(localStorage.getItem("user_info"));
@@ -31,8 +29,25 @@ $(function() {
       timeout:10000,
       success: function(data) {
         $.each(data, function() {
-          console.dir(this);
-          addRepo(this);
+          var issues = new Array();
+          var that = this;
+          //issue取得
+          $.ajax({
+            url: this.issues_url.substr(0, this.issues_url.length-9),
+            type:'GET',
+            data : {access_token : user.access_token},
+            timeout:10000,
+            success: function(data) {
+              $.each(data, function() {
+                issues.push(this.title);
+              });
+              addRepo(that, issues);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.warn(errorThrown);
+            }
+          });
+
         });
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -94,27 +109,64 @@ $(function() {
   }
 });
 
-function addRepo(repo) {
-  $('.repos').append('<a href="' + repo.html_url + '" target="_blank">' +
-                       '<div class="col s12 m3">' +
-                         '<div class="card">' +
-                           '<div class="card-content">' +
-                             '<span class="card-title">' + repo.name + '</span>' +
-                             '<p>' + repo.description + '</p>' +
-                           '</div>' +
-                           '<div class="card-tabs">' +
-                             '<ul class="tabs tabs-fixed-width">' +
-                               '<li class="tab"><a href="#test4">Test 1</a></li>' +
-                               '<li class="tab"><a class="active" href="#test5">Test 2</a></li>' +
-                               '<li class="tab"><a href="#test6">Test 3</a></li>' +
-                             '</ul>' +
-                           '</div>' +
-                           '<div class="card-content grey lighten-4">' +
-                             '<div id="test4">Test 1</div>' +
-                             '<div id="test5">Test 2</div>' +
-                             '<div id="test6">Test 3</div>' +
-                           '</div>' +
-                         '</div>' +
-                       '</div>' +
-                     '</a>');
+function addRepo(repo, issues) {
+  issuesHtml = "";
+  for (var i = 0; i < issues.length; i++){
+    issuesHtml = issuesHtml + '<h5 class="issue">' + issues[i] + '</h5>';
+  }
+  console.log(issuesHtml);
+
+  $('.repos').append('<div class="repo col s12 m4">' +
+                        '<div class="card" style="overflow: hidden;">' +
+                          '<div class="card-image waves-effect waves-block waves-light">' +
+
+                          '</div>' +
+                          '<div class="card-content">' +
+                            '<span class="card-title activator grey-text text-darken-4">' + repo.name + '<i class="material-icons right">mode_edit</i></span>' +
+                            '<p>' + repo.description + '</p><br />' +
+                            '<div class="issues">' + issuesHtml + '</div>' +
+                            '<p><a href="' + repo.html_url + '" target="_blank"><i class="icon ion-social-github left"></i>github.comで見る</a></p>' +
+                          '</div>' +
+                          '<div class="card-reveal" style="display: none; transform: translateY(0px);">' +
+                            '<span class="card-title grey-text text-darken-4">Issueを追加<i class="material-icons right">close</i></span>' +
+                            '<div class="issue-form row">' +
+                              '<div class="input-field col s9">' +
+                                '<input placeholder="Issueのタイトル" id="issue_title" type="text" class="validate">' +
+                              '</div>' +
+                              '<div class="col s3">' +
+                                '<a data-issue-url="' + repo.issues_url.substr( 0, repo.issues_url.length-9 ) + '" style="margin-top: 24px" class="create-issue-btn waves-effect waves-light btn">作成</a>' +
+                              '</div>' +
+                            '</div>' +
+                          '</div>' +
+
+                          '<div class="card-action">' +
+                            '<a href="#">Issues</a>' +
+                            '<a href="#">プルリクエスト</a>' +
+                          '</div>' +
+                        '</div>' +
+                      '</div>');
+}
+
+$(document).on('click', '.create-issue-btn', function() {
+  var issueUrl = $(this).data('issueUrl');
+  var issueTitle = $(this).parents('.issue-form').find('#issue_title').val();
+
+  createIssue(issueUrl, issueTitle);
+});
+
+function createIssue(url, title) {
+  var user = JSON.parse(localStorage.getItem("user_info"));
+  
+  $.ajax({
+    url: url,
+    type:'POST',
+    data : {access_token : user.access_token, title: title},
+    timeout:10000,
+    success: function(data) {
+      console.log(data);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      console.warn(errorThrown);
+    }
+  });
 }

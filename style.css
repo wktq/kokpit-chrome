@@ -1,5 +1,5 @@
 .sidebar {
-  height: calc(100vh - 64px);
+  height: calc(100vh - 54px);
   width: 240px;
   background-color: #fff;
   float: left;
@@ -26,9 +26,18 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .main {
   width: calc(100% - 240px);
-  height: calc(100vh - 64px);
+  height: calc(100vh - 54px);
+  overflow-y: scroll;
   margin-left: 240px;
   background-color: #eee;
   float: left;
   padding: 12px;
+}
+
+.icon.left {
+  margin-right: .5em;
+}
+
+.issue {
+  font-size: 13px;
 }
