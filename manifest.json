@@ -11,5 +11,8 @@
   "chrome_url_overrides": {
     "newtab": "blank.html"
   },
+  "externally_connectable": {
+    "matches": ["https://oauth.io/*"]
+  },
   "manifest_version": 2
 }
