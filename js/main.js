@@ -60,7 +60,7 @@ function activateScreen(key) {
 function insertProject(key, data) {
   $('.project-list').prepend('<li class="collection-item" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
   $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
-                                '<div class="goal-box col l3"><a class="btn">ゴールを追加</a></div>' +
+                                '<div class="goal-box col l3"><a class="btn" href="#goalModal">ゴールを追加</a></div>' +
                                 '</div>' +
                                '</div>');
 }
@@ -101,6 +101,22 @@ function createGoal(title, projectId, description, priority) {
     priority: priority
   });
 }
+
+
+
+function insertGoal(key, data) {
+  var project = $('[data-project-id="' + data.project_id + '"]');
+  project.append('<h5 data-project-id="' + key + '">' + data.title + '</h5>');
+}
+
+$('.goalModalBtn').on('click', function() {
+  var title = $('#goalTitle').val();
+  var description = $('#goalDescription').val();
+  var priority = $('#goalPriority').val();
+  var projectId = $('#goalProjectId').val();
+
+  createProject(title, projectId, description, priority);
+});
 
 // TASKS =========================================================-
 
