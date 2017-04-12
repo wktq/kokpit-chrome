@@ -1,0 +1,100 @@
+.sidebar {
+  height: calc(100vh - 50px);
+  width: 240px;
+  background-color: #fff;
+  float: left;
+  position: fixed;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+  .sidebar .collection-item {
+    cursor: pointer; }
+    .sidebar .collection-item:hover, .sidebar .collection-item.active {
+      background-color: #eee;
+      color: #333; }
+
+.brand-logo {
+  color: #fff;
+  font-size: 32px !important;
+  padding: 0 24px !important;
+  font-family: VT323; }
+
+.header {
+  height: 50px;
+  line-height: 50px;
+  background-color: #36404a; }
+
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+  height: 50px;
+  line-height: 50px; }
+
+.main {
+  width: calc(100% - 240px);
+  height: calc(100vh - 50px);
+  overflow-y: hidden;
+  margin-left: 240px;
+  float: left;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+
+.icon.left {
+  margin-right: .5em; }
+
+.issue {
+  font-size: 13px; }
+
+.repo-desc {
+  height: 40px;
+  overflow: hidden; }
+
+@media screen and (max-width: 1200px) {
+  .main {
+    width: 100%;
+    margin-left: 0px; }
+  .sidebar {
+    width: 0px; } }
+
+.colorPicker .colorPicker_item {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  border: solid 2px #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+  cursor: pointer; }
+  .colorPicker .colorPicker_item.cp_black {
+    background-color: #000000; }
+  .colorPicker .colorPicker_item.cp_dark {
+    background-color: #353535; }
+  .colorPicker .colorPicker_item.cp_grey {
+    background-color: #9E9E9E; }
+  .colorPicker .colorPicker_item.cp_brown {
+    background-color: #795548; }
+  .colorPicker .colorPicker_item.cp_red {
+    background-color: #F44336; }
+  .colorPicker .colorPicker_item.cp_pink {
+    background-color: #FF80AB; }
+  .colorPicker .colorPicker_item.cp_purple {
+    background-color: #673AB7; }
+  .colorPicker .colorPicker_item.cp_yellow {
+    background-color: #FFC107; }
+  .colorPicker .colorPicker_item.cp_orange {
+    background-color: #FF5722; }
+  .colorPicker .colorPicker_item.cp_green {
+    background-color: #4CAF50; }
+  .colorPicker .colorPicker_item.cp_blue {
+    background-color: #2196F3; }
+  .colorPicker .colorPicker_item.active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.35); }
+
+.projectScreen {
+  background-color: #eee;
+  width: 100%;
+  height: calc(100vh - 50px);
+  border-bottom: 1px dashed #333;
+  padding: 8px;
+  display: none;
+  border-top: 2px solid #333; }

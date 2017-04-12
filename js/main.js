@@ -15,17 +15,106 @@ var goalsRef = firebase.database().ref('goals/'); //ゴール
 var tasksRef = firebase.database().ref('tasks/'); //タスク
 var cardsRef = firebase.database().ref('cards/'); //カード
 
-// PROJECTS
+// PROJECTS ======================================================
 projectsRef.on('value', function(data) {
-  snapshot.forEach(function(snapshot) {
+  $('.project-list').html('');
+  var n = data.numChildren();
+  var c = 0;
+
+  data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
+
+    insertProject(key, data);
+    c++;
+
+    if (n == c) {
+      //挿入後の処理
+      activateScreen(key);
+    }
   });
 });
 
+$(document).ready(function(){
+  $('.modal').modal();
+});
 
-// GOALS
-// TASKS
+function createProject(name, color) {
+  if (!color) {
+    color = "";
+  }
+  projectsRef.push({
+    name: name,
+    color: color
+  });
+}
+
+function activateScreen(key) {
+  $('.projectScreen').hide();
+  $('.collection-item').removeClass('active');
+
+  $('[data-project-key="' + key + '"]').addClass('active');
+  $('[data-project-id="' + key + '"]').show();
+}
+
+function insertProject(key, data) {
+  $('.project-list').prepend('<li class="collection-item" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
+  $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+                                '<div class="goal-box col l3"><a class="btn">ゴールを追加</a></div>' +
+                                '</div>' +
+                               '</div>');
+}
+
+$(document).on('click', '.project-list .collection-item', function() {
+  var projectId = $(this).data('projectKey');
+  activateScreen(projectId);
+});
+
+$('.projectModalBtn').on('click', function() {
+  var name = $('#projectName').val();
+  var color = $('#projectColor').val();
+
+  createProject(name, color);
+});
+
+
+// GOALS ================================================================
+goalsRef.on('value', function(data) {
+  $('.goal-list').html('');
+
+  data.forEach(function(snapshot) {
+    var key = snapshot.key;
+    var data = snapshot.val();
+
+    insertGoal(key, data);
+  });
+});
+
+function createGoal(title, projectId, description, priority) {
+  if (!desc) {
+    desc = "";
+  }
+  GoalsRef.push({
+    title: title,
+    project_id: projectId,
+    description: description,
+    priority: priority
+  });
+}
+
+// TASKS =========================================================-
+
+
+// Color Picker
+$('#projectColor').val($('.colorPicker_item.active').data('cpColor'));
+
+$('.colorPicker_item').on('click', function() {
+  $('.colorPicker_item').removeClass('active');
+  $(this).addClass('active');
+  var selectedColor = $(this).data('cpColor');
+  $('#projectColor').val(selectedColor);
+});
+
 
 
 //
