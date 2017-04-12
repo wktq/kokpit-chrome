@@ -98,9 +98,20 @@
             <label for="goalTitle">タイトル</label>
           </div>
           <div class="input-field">
-            <input id="goalDescription" type="text" class="validate">
+            <textarea id="goalDescription" class="materialize-textarea"></textarea>
             <label for="goalDescription">ゴールの説明</label>
           </div>
+          <div class="input-field">
+            <select id="goalPriority">
+              <option value="" disabled selected>優先度を選択</option>
+              <option value="1">緊急</option>
+              <option value="2">高い</option>
+              <option value="3">普通</option>
+              <option value="3">低い</option>
+            </select>
+            <label>優先度</label>
+          </div>
+          <input id="goalProjectId" type="hidden">
         </div>
       </div>
       <div class="modal-footer">

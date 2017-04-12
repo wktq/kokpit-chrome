@@ -53,6 +53,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   transition: all 0.3s ease-in-out;
 }
 
+.modal {
+  overflow-y: visible;
+}
+
 .icon.left {
   margin-right: .5em;
 }

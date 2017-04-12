@@ -37,6 +37,7 @@ projectsRef.on('value', function(data) {
 
 $(document).ready(function(){
   $('.modal').modal();
+  $('select').material_select();
 });
 
 function createProject(name, color) {
@@ -59,15 +60,17 @@ function activateScreen(key) {
 
 function insertProject(key, data) {
   $('.project-list').prepend('<li class="collection-item" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
-  $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
-                                '<div class="goal-box col l3"><a class="btn" href="#goalModal">ゴールを追加</a></div>' +
-                                '</div>' +
-                               '</div>');
+  $('.project-screen').prepend('<div class="projectScreen goal-list" style="border-color: ' + data.color + '" data-project-id="' + key + '"></div>');
 }
 
 $(document).on('click', '.project-list .collection-item', function() {
   var projectId = $(this).data('projectKey');
   activateScreen(projectId);
+});
+
+$(document).on('click', '.modal-action', function() {
+  var key = $(this).parents('.projectScreen').data('projectId');
+  $('#goalProjectId').val(key);
 });
 
 $('.projectModalBtn').on('click', function() {
@@ -88,13 +91,12 @@ goalsRef.on('value', function(data) {
 
     insertGoal(key, data);
   });
+
+  $('.goal-list').append('<div class="goal-box col l3"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
 });
 
 function createGoal(title, projectId, description, priority) {
-  if (!desc) {
-    desc = "";
-  }
-  GoalsRef.push({
+  goalsRef.push({
     title: title,
     project_id: projectId,
     description: description,
@@ -102,11 +104,11 @@ function createGoal(title, projectId, description, priority) {
   });
 }
 
-
-
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
-  project.append('<h5 data-project-id="' + key + '">' + data.title + '</h5>');
+  project.append('<div class="goal-box col l3"><ul class="collection with-header" data-project-id="' + key + '"><li class="collection-header"><h4>' + data.title + '</h4></li></ul></div>');
+
+  //<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 }
 
 $('.goalModalBtn').on('click', function() {
@@ -115,7 +117,7 @@ $('.goalModalBtn').on('click', function() {
   var priority = $('#goalPriority').val();
   var projectId = $('#goalProjectId').val();
 
-  createProject(title, projectId, description, priority);
+  createGoal(title, projectId, description, priority);
 });
 
 // TASKS =========================================================-
