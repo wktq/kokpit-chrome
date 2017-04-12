@@ -5,7 +5,7 @@
   "incognito": "split",
   "content_security_policy": "script-src 'self' https://*.gstatic.com https://*.firebaseio.com; object-src 'self'",
   "content_scripts": [{
-    "js": ["main.js"],
+    "js": ["js/main.js"],
     "matches": ["http://*/*", "https://*/*"]
   }],
   "chrome_url_overrides": {

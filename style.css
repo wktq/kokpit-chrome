@@ -4,6 +4,10 @@
   background-color: #fff;
   float: left;
   position: fixed;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .brand-logo {
@@ -32,6 +36,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   background-color: #eee;
   float: left;
   padding: 12px;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .icon.left {
@@ -40,4 +48,21 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .issue {
   font-size: 13px;
+}
+
+.repo-desc {
+  height: 40px;
+  overflow: hidden;
+}
+
+@media screen and (max-width:1200px) {
+
+  .main {
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .sidebar {
+    width: 0px;
+  }
 }
