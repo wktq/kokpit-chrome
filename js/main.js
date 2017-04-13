@@ -57,6 +57,7 @@ function activateScreen(key) {
 function insertProject(key, data) {
   $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
   $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+                                  '<div class="col l12"><h5>' + data.name + '</h5></div>' +
                                   '<ul class="goal-list"></ul>' +
                                 '</div>');
 }
