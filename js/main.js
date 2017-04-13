@@ -103,12 +103,14 @@ $('.projectModalBtn').on('click', function() {
 
   createProject(name, color);
   $('#projectName').val('');
+  getAllGoals();
 });
 
 
 // GOALS ================================================================
 goalsRef.on('value', function(data) {
   $('.goal-list').html('');
+  $('.goal-box').remove();
 
   data.forEach(function(snapshot) {
     var key = snapshot.key;
@@ -139,6 +141,21 @@ function insertGoal(key, data) {
   //<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 }
 
+function getAllGoals() {
+  goalsRef.once('value').then(function(snapshot) {
+    $('.goal-list').html('');
+
+    snapshot.forEach(function(snapshot) {
+      var key = snapshot.key;
+      var data = snapshot.val();
+
+      insertGoal(key, data);
+    });
+
+    $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
+  });
+}
+
 //GOALS EVENT
 $('.goalModalBtn').on('click', function() {
   var title = $('#goalTitle').val();
@@ -154,7 +171,6 @@ $('.goalModalBtn').on('click', function() {
 
 // TASKS =========================================================-
 tasksRef.on('value', function(data) {
-
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
