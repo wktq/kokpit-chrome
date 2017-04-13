@@ -262,8 +262,10 @@ $(document).on('keydown', '#taskName', function(e) {
     var title = $(this).val();
     var goalId = $(this).parents('.goal-box').find('.tasks').data('goalId');
 
-    addTask(title, goalId, '');
-    $(this).val('');
+    if (title != "") {
+      addTask(title, goalId, '');
+      $(this).val('');
+    }
   }
 });
 
