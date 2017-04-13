@@ -133,12 +133,14 @@ function createGoal(title, projectId, description, priority) {
 
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
-  project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" data-project-id="' + key + '">' +
+  project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" style="background: #fff">' +
                     '<li class="collection-header"><h5>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
-                    '<li class="collection-item"><div>タスク名<a href="#!" class="secondary-content">10:00</a></div></li>' +
+                    '<span class="tasks" data-goal-id="' + key + '"></span>' +
+                    '<div class="row">' +
+                      '<div class="col s12"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
+                    '</div>' +
                   '</ul></div>');
 
-  //<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 }
 
 function getAllGoals() {
@@ -167,26 +169,30 @@ $('.goalModalBtn').on('click', function() {
 });
 
 
-
-
 // TASKS =========================================================-
 tasksRef.on('value', function(data) {
+  $('.task').remove();
+
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
 
-    insertGoal(key, data);
+    insertTask(key, data);
   });
-
 });
 
 
-function addTask() {
-  //...
+function addTask(title, goalId, time) {
+  tasksRef.push({
+    title: title,
+    goal_id: goalId,
+    time: time
+  });
 }
 
-function insertTask() {
-  //...
+function insertTask(key, data) {
+  var goal = $('[data-goal-id="' + data.goal_id + '"]');
+  goal.before('<li class="collection-item task"><div>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
 }
 
 //GOALS EVENT
@@ -205,7 +211,16 @@ $('.colorPicker_item').on('click', function() {
   $('#projectColor').val(selectedColor);
 });
 
+// Enter Task Submit
+$(document).on('keydown', '#taskName', function(e) {
+  if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+    var title = $(this).val();
+    var goalId = $(this).parents('.goal-box').find('.tasks').data('goalId');
 
+    addTask(title, goalId, '');
+    $(this).val('');
+  }
+});
 
 //
 //
