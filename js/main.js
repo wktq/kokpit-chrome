@@ -195,9 +195,21 @@ function checkTask(key) {
   });
 }
 
+function removeTask(key) {
+  tasksRef.child(key).remove();
+}
+
 function insertTask(key, data) {
   var goal = $('[data-goal-id="' + data.goal_id + '"]');
-  goal.before('<li class="collection-item Task" data-task-id="' + key + '"><div>' + data.title + '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a></div></li>');
+
+  if (data.checked) {
+    var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a>';
+    var taskClass = 'checked';
+  } else {
+    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a>';
+    var taskClass = 'unchecked';
+  }
+  goal.before('<li class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
 }
 
 //TASKS EVENT
@@ -205,6 +217,12 @@ $(document).on('click', '.Task_action-checkBtn', function() {
   var taskId = $(this).parents('.Task').data('taskId');
   checkTask(taskId);
 });
+
+$(document).on('click', '.Task_action-removeBtn', function() {
+  var taskId = $(this).parents('.Task').data('taskId');
+  removeTask(taskId);
+});
+
 
 // OTHERS =========================================================-
 

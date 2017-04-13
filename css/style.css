@@ -105,8 +105,23 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     border: none;
     box-shadow: none; }
 
-.Task_action-checkBtn {
-  cursor: pointer; }
+.Task {
+  position: relative; }
+  .Task .Task_title {
+    margin: 0px; }
+  .Task .Task_action {
+    position: absolute;
+    top: 8px;
+    right: 8px; }
+    .Task .Task_action .secondary-content.hover {
+      background-color: #ddd; }
+  .Task.checked .Task_title {
+    opacity: 0.4;
+    text-decoration: line-through; }
+  .Task .Task_action-checkBtn {
+    cursor: pointer; }
+  .Task .Task_action-removeBtn {
+    cursor: pointer; }
 
 .projectScreen {
   background-color: #eee;

@@ -155,9 +155,41 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   }
 }
 
-.Task_action-checkBtn {
-  cursor: pointer;
+.Task {
+  position: relative;
+
+  .Task_title {
+    margin: 0px;
+  }
+
+  .Task_action {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    .secondary-content {
+      &.hover {
+        background-color: #ddd;
+      }
+    }
+  }
+
+  &.checked {
+    .Task_title {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+  }
+
+  .Task_action-checkBtn {
+    cursor: pointer;
+  }
+
+  .Task_action-removeBtn {
+    cursor: pointer;
+  }
 }
+
 
 .projectScreen {
   background-color: #eee;
