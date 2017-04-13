@@ -21,6 +21,11 @@ projectsRef.on('value', function(data) {
   var n = data.numChildren();
   var c = 0;
 
+  if (data.numChildren() == 0) {
+    $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
+    $('.projectScreen').hide();
+  }
+
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
@@ -46,6 +51,10 @@ function createProject(name, color) {
   });
 }
 
+function removeProject(key) {
+  projectsRef.child(key).remove();
+}
+
 function activateScreen(key) {
   $('.projectScreen').hide();
   $('.collection-item').removeClass('active');
@@ -58,6 +67,10 @@ function insertProject(key, data) {
   $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
   $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
                                   '<div class="col l12"><h5>' + data.name + '</h5></div>' +
+                                  '<span class="projectScreen_action">' +
+                                    '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
+                                    '<li class="projectScreen_action-removeBtn"><i class="icon ion-trash-b"></i></li>' +
+                                  '</span>' +
                                   '<ul class="goal-list"></ul>' +
                                 '</div>');
 }
@@ -78,11 +91,18 @@ $(document).on('click', '.modal-action', function() {
   $('#goalProjectId').val(key);
 });
 
+
+$(document).on('click', '.projectScreen_action-removeBtn', function() {
+  var key = $(this).parents('.projectScreen').data('projectId');
+  removeProject(key);
+});
+
 $('.projectModalBtn').on('click', function() {
   var name = $('#projectName').val();
   var color = $('#projectColor').val();
 
   createProject(name, color);
+  $('#projectName').val('');
 });
 
 

@@ -93,7 +93,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   .colorPicker .colorPicker_item.cp_blue {
     background-color: #2196F3; }
   .colorPicker .colorPicker_item.active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.35); }
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.35); }
 
 .projectScreen {
   background-color: #eee;
@@ -102,4 +102,21 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   border-bottom: 1px dashed #333;
   padding: 8px;
   display: none;
-  border-top: 5px solid #333; }
+  border-top: 5px solid #333;
+  position: relative; }
+  .projectScreen .projectScreen_action {
+    position: absolute;
+    top: 20px;
+    right: 8px; }
+    .projectScreen .projectScreen_action li {
+      list-style: none;
+      display: inline-block;
+      padding: 8px 24px;
+      vertical-align: middle;
+      background-color: #fff;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px; }
+    .projectScreen .projectScreen_action .projectScreen_action-removeBtn {
+      color: red; }

@@ -137,7 +137,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     }
 
     &.active {
-      box-shadow: 0 0 8px rgba(0,0,0,.35);
+      box-shadow: 0 0 24px rgba(0,0,0,.35);
     }
   }
 }
@@ -150,4 +150,27 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   padding: 8px;
   display: none;
   border-top: 5px solid #333;
+  position: relative;
+
+  .projectScreen_action {
+    position: absolute;
+    top: 20px;
+    right: 8px;
+
+    li {
+      list-style: none;
+      display: inline-block;
+      padding: 8px 24px;
+      vertical-align: middle;
+      background-color: #fff;
+      box-shadow: 0 0 2px rgba(0,0,0,.2);
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .projectScreen_action-removeBtn {
+      color: red;
+    }
+  }
 }
