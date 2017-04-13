@@ -55,7 +55,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   height: 40px;
   overflow: hidden; }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
   .main {
     width: 100%;
     margin-left: 0px; }
@@ -102,4 +102,4 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   border-bottom: 1px dashed #333;
   padding: 8px;
   display: none;
-  border-top: 2px solid #333; }
+  border-top: 6px solid #333; }

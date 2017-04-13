@@ -17,7 +17,7 @@ var cardsRef = firebase.database().ref('cards/'); //カード
 
 // PROJECTS ======================================================
 projectsRef.on('value', function(data) {
-  $('.project-list').html('');
+  $('.projectList').html('');
   var n = data.numChildren();
   var c = 0;
 
@@ -31,13 +31,9 @@ projectsRef.on('value', function(data) {
     if (n == c) {
       //挿入後の処理
       activateScreen(key);
+      $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
   });
-});
-
-$(document).ready(function(){
-  $('.modal').modal();
-  $('select').material_select();
 });
 
 function createProject(name, color) {
@@ -59,11 +55,19 @@ function activateScreen(key) {
 }
 
 function insertProject(key, data) {
-  $('.project-list').prepend('<li class="collection-item" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
-  $('.project-screen').prepend('<div class="projectScreen goal-list" style="border-color: ' + data.color + '" data-project-id="' + key + '"></div>');
+  $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
+  $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+                                  '<ul class="goal-list"></ul>' +
+                                '</div>');
 }
 
-$(document).on('click', '.project-list .collection-item', function() {
+//PROJECTS EVENT
+$(document).ready(function(){
+  $('.modal').modal();
+  $('select').material_select();
+});
+
+$(document).on('click', '.projectList .projectList-list', function() {
   var projectId = $(this).data('projectKey');
   activateScreen(projectId);
 });
@@ -92,7 +96,7 @@ goalsRef.on('value', function(data) {
     insertGoal(key, data);
   });
 
-  $('.goal-list').append('<div class="goal-box col l3"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
+  $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
 });
 
 function createGoal(title, projectId, description, priority) {
@@ -106,11 +110,15 @@ function createGoal(title, projectId, description, priority) {
 
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
-  project.append('<div class="goal-box col l3"><ul class="collection with-header" data-project-id="' + key + '"><li class="collection-header"><h4>' + data.title + '</h4></li></ul></div>');
+  project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" data-project-id="' + key + '">' +
+                    '<li class="collection-header"><h5>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
+                    '<li class="collection-item"><div>タスク名<a href="#!" class="secondary-content">10:00</a></div></li>' +
+                  '</ul></div>');
 
   //<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 }
 
+//GOALS EVENT
 $('.goalModalBtn').on('click', function() {
   var title = $('#goalTitle').val();
   var description = $('#goalDescription').val();
@@ -120,7 +128,34 @@ $('.goalModalBtn').on('click', function() {
   createGoal(title, projectId, description, priority);
 });
 
+
+
+
 // TASKS =========================================================-
+tasksRef.on('value', function(data) {
+
+  data.forEach(function(snapshot) {
+    var key = snapshot.key;
+    var data = snapshot.val();
+
+    insertGoal(key, data);
+  });
+
+});
+
+
+function addTask() {
+  //...
+}
+
+function insertTask() {
+  //...
+}
+
+//GOALS EVENT
+
+
+// OTHERS =========================================================-
 
 
 // Color Picker
