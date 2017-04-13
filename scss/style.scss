@@ -144,7 +144,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 #taskName {
   margin: 0px;
-  font-size: 11px;
+  font-size: 13px;
   padding: 0 18px;
   box-sizing: border-box;
   border: none;
@@ -160,6 +160,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
   .Task_title {
     margin: 0px;
+    font-size: 13px;
   }
 
   .Task_action {
@@ -171,6 +172,9 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       &.hover {
         background-color: #ddd;
       }
+      padding: 0 12px;
+      display: inline-block;
+      cursor: pointer;
     }
   }
 
@@ -179,14 +183,6 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       opacity: 0.4;
       text-decoration: line-through;
     }
-  }
-
-  .Task_action-checkBtn {
-    cursor: pointer;
-  }
-
-  .Task_action-removeBtn {
-    cursor: pointer;
   }
 }
 

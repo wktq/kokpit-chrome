@@ -195,6 +195,12 @@ function checkTask(key) {
   });
 }
 
+function uncheckTask(key) {
+  tasksRef.child(key).update({
+    checked: false
+  });
+}
+
 function removeTask(key) {
   tasksRef.child(key).remove();
 }
@@ -203,7 +209,7 @@ function insertTask(key, data) {
   var goal = $('[data-goal-id="' + data.goal_id + '"]');
 
   if (data.checked) {
-    var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a>';
+    var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a><a class="secondary-content Task_action-uncheckBtn"><i class="material-icons">redo</i></a>';
     var taskClass = 'checked';
   } else {
     var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a>';
@@ -216,6 +222,11 @@ function insertTask(key, data) {
 $(document).on('click', '.Task_action-checkBtn', function() {
   var taskId = $(this).parents('.Task').data('taskId');
   checkTask(taskId);
+});
+
+$(document).on('click', '.Task_action-uncheckBtn', function() {
+  var taskId = $(this).parents('.Task').data('taskId');
+  uncheckTask(taskId);
 });
 
 $(document).on('click', '.Task_action-removeBtn', function() {
