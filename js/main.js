@@ -52,7 +52,15 @@ function createProject(name, color) {
 }
 
 function removeProject(key) {
-  projectsRef.child(key).remove();
+  if(window.confirm('このプロジェクトを削除しますか？')){
+    projectsRef.child(key).remove();
+  }
+
+  goalsRef.orderByChild("project_id").equalTo(key).on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      console.log(data.title);
+    });
+  });
 }
 
 function activateScreen(key) {
@@ -104,6 +112,7 @@ $('.projectModalBtn').on('click', function() {
   createProject(name, color);
   $('#projectName').val('');
   getAllGoals();
+  getAllTasks();
 });
 
 
@@ -111,15 +120,29 @@ $('.projectModalBtn').on('click', function() {
 goalsRef.on('value', function(data) {
   $('.goal-list').html('');
   $('.goal-box').remove();
+  var n = data.numChildren();
+  var c = 0;
 
+  if (n == 0) {
+    var projectColor = $('[data-project-id="' + data.project_id + '"]').css('border-color');
+    $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
+  }
+  
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
 
     insertGoal(key, data);
+    c++;
+
+    console.log(n + ':' + c);
+
+    if (n == c) {
+      var projectColor = $('[data-project-id="' + data.project_id + '"]').css('border-color');
+      $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
+    }
   });
 
-  $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
 });
 
 function createGoal(title, projectId, description, priority) {
@@ -223,6 +246,19 @@ function insertTask(key, data) {
     onUpdate: function (evt/**Event*/){
        var item = evt.item; // the current dragged HTMLElement
     }
+  });
+}
+
+function getAllTasks() {
+  tasksRef.once('value').then(function(snapshot) {
+    $('.tasks').html('');
+
+    snapshot.forEach(function(snapshot) {
+      var key = snapshot.key;
+      var data = snapshot.val();
+
+      insertTask(key, data);
+    });
   });
 }
 
