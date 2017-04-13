@@ -134,8 +134,8 @@ function createGoal(title, projectId, description, priority) {
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
   project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" style="background: #fff">' +
-                    '<li class="collection-header"><h5>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
-                    '<span class="tasks" data-goal-id="' + key + '"></span>' +
+                    '<li class="collection-header"><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
+                    '<span class="tasks" id="tasks" data-goal-id="' + key + '"></span>' +
                     '<div class="col s12"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
 
@@ -212,10 +212,18 @@ function insertTask(key, data) {
     var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a><a class="secondary-content Task_action-uncheckBtn"><i class="material-icons">redo</i></a>';
     var taskClass = 'checked';
   } else {
-    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a>';
+    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content"><i class="material-icons">access_time</i></a>';
     var taskClass = 'unchecked';
   }
   goal.before('<li class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
+  var tasks = document.getElementById("tasks");
+  var sort = Sortable.create(tasks, {
+    animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+    draggable: ".task", // Specifies which items inside the element should be sortable
+    onUpdate: function (evt/**Event*/){
+       var item = evt.item; // the current dragged HTMLElement
+    }
+  });
 }
 
 //TASKS EVENT
