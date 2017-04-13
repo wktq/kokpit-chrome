@@ -136,9 +136,7 @@ function insertGoal(key, data) {
   project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" style="background: #fff">' +
                     '<li class="collection-header"><h5>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
                     '<span class="tasks" data-goal-id="' + key + '"></span>' +
-                    '<div class="row">' +
-                      '<div class="col s12"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
-                    '</div>' +
+                    '<div class="col s12"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
 
 }
@@ -171,7 +169,7 @@ $('.goalModalBtn').on('click', function() {
 
 // TASKS =========================================================-
 tasksRef.on('value', function(data) {
-  $('.task').remove();
+  $('.Task').remove();
 
   data.forEach(function(snapshot) {
     var key = snapshot.key;
@@ -186,17 +184,27 @@ function addTask(title, goalId, time) {
   tasksRef.push({
     title: title,
     goal_id: goalId,
-    time: time
+    time: time,
+    checked: false
+  });
+}
+
+function checkTask(key) {
+  tasksRef.child(key).update({
+    checked: true
   });
 }
 
 function insertTask(key, data) {
   var goal = $('[data-goal-id="' + data.goal_id + '"]');
-  goal.before('<li class="collection-item task"><div>' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+  goal.before('<li class="collection-item Task" data-task-id="' + key + '"><div>' + data.title + '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a></div></li>');
 }
 
-//GOALS EVENT
-
+//TASKS EVENT
+$(document).on('click', '.Task_action-checkBtn', function() {
+  var taskId = $(this).parents('.Task').data('taskId');
+  checkTask(taskId);
+});
 
 // OTHERS =========================================================-
 

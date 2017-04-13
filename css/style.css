@@ -95,6 +95,19 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   .colorPicker .colorPicker_item.active {
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.35); }
 
+#taskName {
+  margin: 0px;
+  font-size: 11px;
+  padding: 0 18px;
+  box-sizing: border-box;
+  border: none; }
+  #taskName:focus, #taskName:active {
+    border: none;
+    box-shadow: none; }
+
+.Task_action-checkBtn {
+  cursor: pointer; }
+
 .projectScreen {
   background-color: #eee;
   width: 100%;
