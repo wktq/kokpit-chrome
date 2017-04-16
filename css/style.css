@@ -106,7 +106,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     box-shadow: none; }
 
 .Task {
-  position: relative; }
+  position: relative;
+  cursor: pointer; }
   .Task .Task_title {
     margin: 0px;
     font-size: 13px; }
@@ -123,6 +124,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   .Task.checked .Task_title {
     opacity: 0.4;
     text-decoration: line-through; }
+
+.Goal .Goal_action-delete {
+  cursor: pointer;
+  margin-left: 12px; }
 
 .projectScreen {
   background-color: #eee;

@@ -55,13 +55,14 @@ function removeProject(key) {
   if(window.confirm('このプロジェクトを削除しますか？')){
     projectsRef.child(key).remove();
   }
-
-  goalsRef.orderByChild("project_id").equalTo(key).on("value", function(snapshot) {
-    snapshot.forEach(function(data) {
-      console.log(data.title);
-    });
-  });
 }
+
+function removeGoal(key) {
+  if(window.confirm('このプロジェクトを削除しますか？')){
+    goalsRef.child(key).remove();
+  }
+}
+
 
 function activateScreen(key) {
   $('.projectScreen').hide();
@@ -115,19 +116,18 @@ $('.projectModalBtn').on('click', function() {
   getAllTasks();
 });
 
-
 // GOALS ================================================================
 goalsRef.on('value', function(data) {
   $('.goal-list').html('');
-  $('.goal-box').remove();
+  $('.Goal').remove();
   var n = data.numChildren();
   var c = 0;
 
   if (n == 0) {
     var projectColor = $('[data-project-id="' + data.project_id + '"]').css('border-color');
-    $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
+    $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
   }
-  
+
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
@@ -139,10 +139,11 @@ goalsRef.on('value', function(data) {
 
     if (n == c) {
       var projectColor = $('[data-project-id="' + data.project_id + '"]').css('border-color');
-      $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
+      $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
     }
   });
-
+  getAllTasks();
+  $(".goal-list").sortable();
 });
 
 function createGoal(title, projectId, description, priority) {
@@ -156,10 +157,10 @@ function createGoal(title, projectId, description, priority) {
 
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
-  project.append('<div class="goal-box col l3 m3"><ul class="collection with-header" style="background: #fff">' +
-                    '<li class="collection-header"><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a href="#!" class="secondary-content"><i class="material-icons">timer</i></a></h5></li>' +
-                    '<span class="tasks" id="tasks" data-goal-id="' + key + '"></span>' +
-                    '<div class="col s12"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
+  project.append('<div class="Goal col l3 m3"><ul class="collection with-header" style="background: #fff">' +
+                    '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5></li>' +
+                    '<span class="tasks" data-goal-id="' + key + '"></span>' +
+                    '<div class="col s12" style="border-top: #ddd 1px solid"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
 
 }
@@ -175,7 +176,7 @@ function getAllGoals() {
       insertGoal(key, data);
     });
 
-    $('.projectScreen').append('<div class="goal-box col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
+    $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
   });
 }
 
@@ -187,6 +188,11 @@ $('.goalModalBtn').on('click', function() {
   var projectId = $('#goalProjectId').val();
 
   createGoal(title, projectId, description, priority);
+});
+
+$(document).on('click', '.Goal_action-delete', function() {
+  var key = $(this).parents('.Goal').find('.tasks').data('goalId');
+  removeGoal(key);
 });
 
 
@@ -203,11 +209,12 @@ tasksRef.on('value', function(data) {
 });
 
 
-function addTask(title, goalId, time) {
+function addTask(title, goalId, time, index) {
   tasksRef.push({
     title: title,
     goal_id: goalId,
     time: time,
+    index: index,
     checked: false
   });
 }
@@ -235,18 +242,11 @@ function insertTask(key, data) {
     var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a><a class="secondary-content Task_action-uncheckBtn"><i class="material-icons">redo</i></a>';
     var taskClass = 'checked';
   } else {
-    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content"><i class="material-icons">access_time</i></a>';
+    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time">' + toMinutes(data.time) + '</a>';
     var taskClass = 'unchecked';
   }
-  goal.before('<li class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
-  var tasks = document.getElementById("tasks");
-  var sort = Sortable.create(tasks, {
-    animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
-    draggable: ".task", // Specifies which items inside the element should be sortable
-    onUpdate: function (evt/**Event*/){
-       var item = evt.item; // the current dragged HTMLElement
-    }
-  });
+  goal.append('<li class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
+  goal.sortable();
 }
 
 function getAllTasks() {
@@ -261,6 +261,9 @@ function getAllTasks() {
     });
   });
 }
+
+var currentMoveY = 0;
+var dragging = false;
 
 //TASKS EVENT
 $(document).on('click', '.Task_action-checkBtn', function() {
@@ -277,7 +280,6 @@ $(document).on('click', '.Task_action-removeBtn', function() {
   var taskId = $(this).parents('.Task').data('taskId');
   removeTask(taskId);
 });
-
 
 // OTHERS =========================================================-
 
@@ -296,14 +298,33 @@ $('.colorPicker_item').on('click', function() {
 $(document).on('keydown', '#taskName', function(e) {
   if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
     var title = $(this).val();
-    var goalId = $(this).parents('.goal-box').find('.tasks').data('goalId');
+    var goal = $(this).parents('.Goal').find('.tasks');
+    var index = goal.find('.Task').length;
 
     if (title != "") {
-      addTask(title, goalId, '');
+      addTask(title, goal.data('goalId'), 600, index + 1);
       $(this).val('');
     }
   }
 });
+
+// toMinutes
+function toMinutes(seconds){
+  var rem = seconds % 60;
+  if (seconds > 60) {
+    var _minutes = (seconds - rem) / 60 ;
+    if (rem == 0) {
+      var _seconds = '00';
+    } else {
+      var _seconds = rem;
+    }
+  } else {
+    var _minutes = '00';
+    var _seconds = seconds
+  }
+
+  return _minutes + ":" + _seconds;
+}
 
 //
 //

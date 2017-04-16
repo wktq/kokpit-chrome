@@ -157,6 +157,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .Task {
   position: relative;
+  cursor: pointer;
 
   .Task_title {
     margin: 0px;
@@ -186,6 +187,12 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   }
 }
 
+.Goal {
+  .Goal_action-delete {
+    cursor: pointer;
+    margin-left: 12px;
+  }
+}
 
 .projectScreen {
   background-color: #eee;
