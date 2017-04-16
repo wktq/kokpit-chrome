@@ -35,7 +35,6 @@ projectsRef.on('value', function(data) {
 
     if (n == c) {
       //挿入後の処理
-      activateScreen(key);
       $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
   });
