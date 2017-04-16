@@ -229,6 +229,12 @@ function uncheckTask(key) {
   });
 }
 
+function setTimeTask(key, time) {
+  tasksRef.child(key).update({
+    time: time
+  });
+}
+
 function removeTask(key) {
   tasksRef.child(key).remove();
 }
@@ -240,7 +246,7 @@ function insertTask(key, data) {
     var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a><a class="secondary-content Task_action-uncheckBtn"><i class="material-icons">redo</i></a>';
     var taskClass = 'checked';
   } else {
-    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time">' + toMinutes(data.time) + '</a>';
+    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time dropdown-button" data-activates="dropdown1">' + toMinutes(data.time) + '</a>';
     var taskClass = 'unchecked';
   }
 
@@ -261,8 +267,10 @@ function getAllTasks() {
   });
 }
 
+// Data about Task
 var currentMoveY = 0;
 var dragging = false;
+var currentTask = "";
 
 //TASKS EVENT
 $(document).on('click', '.Task_action-checkBtn', function() {
@@ -279,6 +287,56 @@ $(document).on('click', '.Task_action-removeBtn', function() {
   var taskId = $(this).parents('.Task').data('taskId');
   removeTask(taskId);
 });
+
+$(document).on('click', '.Task_action-time', function() {
+  currentTaskId = $(this).parents('.Task').data('taskId');
+});
+
+$(document).on('click', '.change-time-btn', function() {
+  var newTime = $(this).data('taskTime');
+  var key = currentTaskId;
+  setTimeTask(key, newTime)
+});
+
+
+function updateScreen() {
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+
+  // get all tasks
+  tasksRef.once('value').then(function(snapshot) {
+    $('.tasks').html('');
+
+    snapshot.forEach(function(snapshot) {
+      var key = snapshot.key;
+      var data = snapshot.val();
+
+      insertTask(key, data);
+    });
+  });
+
+  // get all goals
+  goalsRef.once('value').then(function(snapshot) {
+    $('.goal-list').html('');
+
+    snapshot.forEach(function(snapshot) {
+      var key = snapshot.key;
+      var data = snapshot.val();
+
+      insertGoal(key, data);
+    });
+
+    $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
+  });
+}
 
 // OTHERS =========================================================-
 
