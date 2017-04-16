@@ -1,38 +1,56 @@
 .sidebar {
   height: calc(100vh - 50px);
   width: 240px;
-  background-color: #fff;
-  float: left;
+  background-color: #353535;
   position: fixed;
+  z-index: 4;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 
-  .collection-item {
-    cursor: pointer;
+  .sidebar_heading {
+    color: #fff;
+    list-style: none;
+    padding: 8px 16px;
+    font-size: 11px;
+  }
 
-    &:hover, &.active {
-      background-color: #eee;
-      color: #333;
+  ul {
+    border: none !important;
+
+    .collection-item {
+      cursor: pointer;
+
+      &:hover, &.active {
+        background-color: #eee;
+        color: #333;
+      }
     }
   }
 }
 
 .brand-logo {
-  color: #fff;
-  font-size: 24px !important;
+  color: #757575 !important;
+  font-size: 28px !important;
+  letter-spacing: 2px;
   padding: 0 24px !important;
-  font-family: Play;
+  font-family: 'Teko';
 }
 
 .header {
   height: 50px;
   line-height: 50px;
-  background-color: #36404a;
+  background-color: #fff;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 5;
+  box-shadow: 0 0 2px rgba(0,0,0,.25);
 
   li a {
     font-size: 13px;
+    color: #757575 !important;
   }
 }
 
@@ -215,7 +233,6 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   border-bottom: 1px dashed #333;
   padding: 8px;
   display: none;
-  border-top: 5px solid #333;
   position: relative;
 
   .projectScreen_action {
