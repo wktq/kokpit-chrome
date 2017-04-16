@@ -36,6 +36,16 @@
   letter-spacing: 2px;
   padding: 0 24px !important;
   font-family: 'Teko';
+
+  span {
+    display: inline-block;
+    margin-left: 24px;
+  }
+
+  i {
+    position: absolute;
+    top: 10px;
+  }
 }
 
 .header {
@@ -220,7 +230,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     margin-bottom: 16px;
   }
 
-  .Goal_action-delete {
+  .Goal_action-delete, .Goal_action-setTimer {
     cursor: pointer;
     margin-left: 12px;
   }

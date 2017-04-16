@@ -27,6 +27,12 @@
   letter-spacing: 2px;
   padding: 0 24px !important;
   font-family: 'Teko'; }
+  .brand-logo span {
+    display: inline-block;
+    margin-left: 24px; }
+  .brand-logo i {
+    position: absolute;
+    top: 10px; }
 
 .header {
   height: 50px;
@@ -151,7 +157,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   outline: 1px solid #ddd;
   margin-bottom: 16px; }
 
-.Goal .Goal_action-delete {
+.Goal .Goal_action-delete, .Goal .Goal_action-setTimer {
   cursor: pointer;
   margin-left: 12px; }
 

@@ -201,6 +201,9 @@ $(document).on('click', '.Goal_action-delete', function() {
   removeGoal(key);
 });
 
+$(document).on('click', '.Goal_action-setTimer', function() {
+  alert();
+});
 
 // TASKS =========================================================-
 tasksRef.on('value', function(data) {
