@@ -78,7 +78,8 @@ function insertProject(key, data) {
                                   '<div class="col l12"><h5>' + data.name + '</h5></div>' +
                                   '<span class="projectScreen_action">' +
                                     '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
-                                    '<li class="projectScreen_action-removeBtn"><i class="icon ion-trash-b"></i></li>' +
+                                    '<li class="projectScreen_action-deleteTaskBtn"><i class="icon ion-trash-b"></i></li>' +
+                                    '<li class="projectScreen_action-removeBtn"><i class="icon ion-close"></i></li>' +
                                   '</span>' +
                                   '<ul class="goal-list"></ul>' +
                                 '</div>');
@@ -104,6 +105,13 @@ $(document).on('click', '.modal-action', function() {
 $(document).on('click', '.projectScreen_action-removeBtn', function() {
   var key = $(this).parents('.projectScreen').data('projectId');
   removeProject(key);
+});
+
+$(document).on('click', '.projectScreen_action-deleteTaskBtn', function() {
+  $('.Task.checked').each(function(index){
+    var key = $(this).data('taskId');
+    removeTask(key);
+  });
 });
 
 $('.projectModalBtn').on('click', function() {
@@ -140,8 +148,8 @@ goalsRef.on('value', function(data) {
       $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
     }
   });
+  updateScreen();
   getAllTasks();
-  $(".goal-list").sortable();
 });
 
 function createGoal(title, projectId, description, priority) {
@@ -156,9 +164,9 @@ function createGoal(title, projectId, description, priority) {
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
   project.append('<div class="Goal col l3 m3"><ul class="collection with-header" style="background: #fff">' +
-                    '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5><p>' + data.description + '</p></li>' +
+                    '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;<span class="Goal_title">' + data.title + '</span><a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5><p>' + data.description + '</p></li>' +
                     '<span class="tasks" data-goal-id="' + key + '"></span>' +
-                    '<div class="col s12" style="border-top: #ddd 1px solid"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
+                    '<div class="col s12 Goal_input"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
 
 }
@@ -204,6 +212,9 @@ tasksRef.on('value', function(data) {
 
     insertTask(key, data);
   });
+
+  getAllTasks();
+  updateScreen();
 });
 
 
@@ -246,12 +257,11 @@ function insertTask(key, data) {
     var rightBtn = '<a class="secondary-content Task_action-removeBtn"><i class="material-icons" style="color: red">delete</i></a><a class="secondary-content Task_action-uncheckBtn"><i class="material-icons">redo</i></a>';
     var taskClass = 'checked';
   } else {
-    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time dropdown-button" data-activates="dropdown1">' + toMinutes(data.time) + '</a>';
+    var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time dropdown-button" data-activates="time_dropdown">' + toMinutes(data.time) + '</a>';
     var taskClass = 'unchecked';
   }
 
   goal.append('<li id="task_' + data.index + '" class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
-  goal.sortable();
 }
 
 function getAllTasks() {
@@ -311,31 +321,7 @@ function updateScreen() {
     }
   );
 
-  // get all tasks
-  tasksRef.once('value').then(function(snapshot) {
-    $('.tasks').html('');
-
-    snapshot.forEach(function(snapshot) {
-      var key = snapshot.key;
-      var data = snapshot.val();
-
-      insertTask(key, data);
-    });
-  });
-
-  // get all goals
-  goalsRef.once('value').then(function(snapshot) {
-    $('.goal-list').html('');
-
-    snapshot.forEach(function(snapshot) {
-      var key = snapshot.key;
-      var data = snapshot.val();
-
-      insertGoal(key, data);
-    });
-
-    $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" href="#goalModal">ゴールを追加</a></div></div>');
-  });
+  $(".tasks").sortable();
 }
 
 // OTHERS =========================================================-

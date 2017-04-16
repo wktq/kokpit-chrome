@@ -188,6 +188,20 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 }
 
 .Goal {
+  .Goal_title {
+    display: inline-block;
+    width: 60%;
+    overflow: hidden;
+    white-space: pre;
+  }
+
+  .Goal_input {
+    border-top: #ddd 1px solid;
+    background-color: #fff;
+    outline: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+
   .Goal_action-delete {
     cursor: pointer;
     margin-left: 12px;
@@ -221,7 +235,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       font-size: 16px;
     }
 
-    .projectScreen_action-removeBtn {
+    .projectScreen_action-removeBtn, .projectScreen_action-deleteTaskBtn {
       color: red;
     }
   }
