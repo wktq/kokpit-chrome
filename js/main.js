@@ -58,7 +58,7 @@ function removeProject(key) {
 }
 
 function removeGoal(key) {
-  if(window.confirm('このプロジェクトを削除しますか？')){
+  if(window.confirm('ゴールを削除しますか？')){
     goalsRef.child(key).remove();
   }
 }
@@ -135,8 +135,6 @@ goalsRef.on('value', function(data) {
     insertGoal(key, data);
     c++;
 
-    console.log(n + ':' + c);
-
     if (n == c) {
       var projectColor = $('[data-project-id="' + data.project_id + '"]').css('border-color');
       $('.projectScreen').append('<div class="Goal col l12"><a class="modal-action btn" style="background: ' + projectColor + '" href="#goalModal">ゴールを追加</a></div></div>');
@@ -158,7 +156,7 @@ function createGoal(title, projectId, description, priority) {
 function insertGoal(key, data) {
   var project = $('[data-project-id="' + data.project_id + '"]');
   project.append('<div class="Goal col l3 m3"><ul class="collection with-header" style="background: #fff">' +
-                    '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5></li>' +
+                    '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;' + data.title + '<a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5><p>' + data.description + '</p></li>' +
                     '<span class="tasks" data-goal-id="' + key + '"></span>' +
                     '<div class="col s12" style="border-top: #ddd 1px solid"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
@@ -245,7 +243,8 @@ function insertTask(key, data) {
     var rightBtn = '<a class="secondary-content Task_action-checkBtn"><i class="material-icons">check</i></a><a class="secondary-content Task_action-time">' + toMinutes(data.time) + '</a>';
     var taskClass = 'unchecked';
   }
-  goal.append('<li class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
+
+  goal.append('<li id="task_' + data.index + '" class="collection-item Task ' + taskClass + '" data-task-id="' + key + '"><p class="Task_title">' + data.title + '</p><span class="Task_action">' + rightBtn + '</span></li>');
   goal.sortable();
 }
 
