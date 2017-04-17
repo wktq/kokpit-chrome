@@ -181,10 +181,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   background-color: #eee;
   width: 100%;
   height: calc(100vh - 50px);
-  border-bottom: 1px dashed #333;
   padding: 8px;
   display: none;
-  position: relative; }
+  position: relative;
+  overflow-y: scroll; }
   .projectScreen .projectScreen_action, .DashBoard .projectScreen_action {
     position: absolute;
     top: 20px;
