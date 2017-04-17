@@ -6,8 +6,52 @@ var config = {
   storageBucket: "kokpit-f6ec6.appspot.com",
   messagingSenderId: "48915756357"
 };
+var currentUser = new Object();
 
 firebase.initializeApp(config);
+
+// USER =====================================
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    currentUser = user;
+
+    $('.userName').text(currentUser.email);
+    swal.close();
+  } else {
+    swal({
+      title: 'ログイン',
+      text: 'ログインしてください。',
+      type: 'warning',
+      confirmButtonText: 'ログイン',
+      html:
+        '<input id="login_email" type="email" placeholder="メールアドレス" class="swal2-input">' +
+        '<input id="login_password" type="password" placeholder="パスワード" class="swal2-input">',
+      preConfirm: function () {
+        return new Promise(function (resolve) {
+          var email = $('#login_email').val();
+          var password = $('#login_password').val()
+          firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorMessage) {
+              alert(errorMessage);
+            }
+          });
+        })
+      },
+      onOpen: function () {
+        $('#swal-input1').focus()
+      },
+      animation: false,
+      customClass: 'animated shake'
+    }).then(function (result) {
+      swal(JSON.stringify(result))
+    }).catch(swal.noop)
+  }
+});
+$(document).on('click', '.logoutBtn', function() {
+  firebase.auth().signOut();
+});
 
 // Define Refs
 var projectsRef = firebase.database().ref('projects/'); //プロジェクト
@@ -18,26 +62,17 @@ var cardsRef = firebase.database().ref('cards/'); //カード
 // PROJECTS ======================================================
 projectsRef.on('value', function(data) {
   $('.projectList').html('');
-  var n = data.numChildren();
-  var c = 0;
-
-  if (data.numChildren() == 0) {
-    $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
-    $('.projectScreen').hide();
-  }
-
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
 
-    insertProject(key, data);
-    c++;
-
-    if (n == c) {
-      //挿入後の処理
-      activateScreen();
+    if (data.owner_email == currentUser.email) {
+      insertProject(key, data);
+      c++;
       $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
+
+    activateScreen();
   });
 });
 
@@ -47,7 +82,8 @@ function createProject(name, color) {
   }
   projectsRef.push({
     name: name,
-    color: color
+    color: color,
+    owner_email: currentUser.email
   });
 }
 
@@ -153,7 +189,7 @@ goalsRef.on('value', function(data) {
 
     insertGoal(key, data);
     insertGoal(key, data, 'dashboard');
-    
+
     c++;
 
     if (n == c) {

@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="./materialize.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./css/sweetalert2.min.css">
+    <link rel="stylesheet" href="./css/animate.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Play|Teko" rel="stylesheet">
 
@@ -18,7 +20,7 @@
         <ul class="right hide-on-med-and-down">
           <li><a href="#projectModal">プロジェクトを作成</a></li>
           <!-- Dropdown Trigger -->
-          <li><a class="dropdown-button" href="#!" data-activates="dropdown1">アカウント<i class="material-icons right">arrow_drop_down</i></a></li>
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><span class="userName">ログインしてください</span><i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
       </div>
     </nav>
@@ -26,7 +28,7 @@
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="#!">設定</a></li>
       <li class="divider"></li>
-      <li><a href="#!" style="color: red">ログアウト</a></li>
+      <li><a class="logoutBtn" style="color: red !important">ログアウト</a></li>
     </ul>
 
     <!-- Page Layout here -->
@@ -155,6 +157,7 @@
     <script src="./js/oauth.min.js"></script>
     <script src="./js/jquery.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
+    <script src="./js/sweetalert2.min.js" charset="utf-8"></script>
     <script src="./js/materialize.min.js" charset="utf-8"></script>
     <script src="./js/main.js"></script>
   </body>
