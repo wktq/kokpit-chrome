@@ -3,7 +3,7 @@
   "description": "Override the new tab page with a blank one",
   "version": "0.2",
   "incognito": "split",
-  "content_security_policy": "script-src 'self' https://*.gstatic.com https://*.firebaseio.com; object-src 'self'",
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "content_scripts": [{
     "js": ["js/main.js"],
     "matches": ["http://*/*", "https://*/*"]

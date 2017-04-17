@@ -6,6 +6,9 @@ var config = {
   storageBucket: "kokpit-f6ec6.appspot.com",
   messagingSenderId: "48915756357"
 };
+var provider = new firebase.auth.GithubAuthProvider();
+provider.addScope('repo');
+
 var currentUser = new Object();
 
 firebase.initializeApp(config);
@@ -14,39 +17,22 @@ firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     currentUser = user;
-
     $('.userName').text(currentUser.email);
     swal.close();
   } else {
-    swal({
-      title: 'ログイン',
-      text: 'ログインしてください。',
-      type: 'warning',
-      confirmButtonText: 'ログイン',
-      html:
-        '<input id="login_email" type="email" placeholder="メールアドレス" class="swal2-input">' +
-        '<input id="login_password" type="password" placeholder="パスワード" class="swal2-input">',
-      preConfirm: function () {
-        return new Promise(function (resolve) {
-          var email = $('#login_email').val();
-          var password = $('#login_password').val()
-          firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorMessage) {
-              alert(errorMessage);
-            }
-          });
-        })
-      },
-      onOpen: function () {
-        $('#swal-input1').focus()
-      },
-      animation: false,
-      customClass: 'animated shake'
-    }).then(function (result) {
-      swal(JSON.stringify(result))
-    }).catch(swal.noop)
+    OAuth.initialize('RiFT8OjQLXUWmCkGjdmQm-VyJLU');
+    OAuth.popup("github", function(err, res) {
+      var token = res.access_token;
+      console.log(token);
+      var credential = firebase.auth.GithubAuthProvider.credential(token);
+      firebase.auth().signInWithCredential(credential).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        console.warn(errorMessage);
+      });
+    });
   }
 });
 $(document).on('click', '.logoutBtn', function() {
@@ -370,7 +356,7 @@ function updateScreen() {
       constrainWidth: false, // Does not change width of dropdown to that of the activator
       gutter: 0, // Spacing from edge
       belowOrigin: false, // Displays dropdown below the button
-      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      alignment: 'right', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
     }
   );
@@ -542,39 +528,10 @@ function toMinutes(seconds){
 //         console.warn(errorThrown);
 //       }
 //     });
-//
-//   } else {
-//     $('.auth-btn-github').click(function() {
-//       OAuth.initialize('RiFT8OjQLXUWmCkGjdmQm-VyJLU');
-//       OAuth.popup("github", function(err, res) {
-//         var userInfo = new Object();
-//         userInfo.access_token = res.access_token;
-//
-//         res.get('/user')
-//         .done(function(result) {
-//           userInfo.name = result.name;
-//           localStorage.setItem('user_info', JSON.stringify(userInfo));
-//         });
-//
-//         res.get('/user/repos?access_token=' + res.access_token)
-//           .done(function(result) {
-//             $.each(result, function() {
-//               addRepo(result);
-//             });
-//
-//             var repos = document.getElementById("repos");
-//           });
-//           res.get('/user/repos/issues?access_token=' + res.access_token)
-//             .done(function(result) {
-//               console.log(result);
-//               $.each(result, function() {
-//
-//               });
-//             });
-//         });
-//
-//       });
-//     }
+
+  // } else {
+  //
+  //   }
 //
 //   if (location.hash === '#callback') {
 //     location.hash = '';
