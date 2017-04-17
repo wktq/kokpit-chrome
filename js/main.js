@@ -35,6 +35,7 @@ projectsRef.on('value', function(data) {
 
     if (n == c) {
       //挿入後の処理
+      activateScreen();
       $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
   });
@@ -67,13 +68,19 @@ function activateScreen(key) {
   $('.projectScreen').hide();
   $('.collection-item').removeClass('active');
 
-  $('[data-project-key="' + key + '"]').addClass('active');
-  $('[data-project-id="' + key + '"]').show();
+  if (key) {
+    $('[data-project-key="' + key + '"]').addClass('active');
+    $('[data-project-id="' + key + '"]').show();
+  } else {
+    $('.dashboard-li').addClass('active');
+    $('.DashBoard').show();
+  }
+
 }
 
 function insertProject(key, data) {
   $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
-  $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+  $('.main').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
                                   '<div class="col l12"><h5>' + data.name + '</h5></div>' +
                                   '<span class="projectScreen_action">' +
                                     '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
@@ -123,6 +130,11 @@ $('.projectModalBtn').on('click', function() {
   getAllTasks();
 });
 
+// Dashborad
+$('.dashboard-li').on('click', function () {
+  activateScreen(null);
+});
+
 // GOALS ================================================================
 goalsRef.on('value', function(data) {
   $('.goal-list').html('');
@@ -140,6 +152,8 @@ goalsRef.on('value', function(data) {
     var data = snapshot.val();
 
     insertGoal(key, data);
+    insertGoal(key, data, 'dashboard');
+
     c++;
 
     if (n == c) {
@@ -160,12 +174,16 @@ function createGoal(title, projectId, description, priority) {
   });
 }
 
-function insertGoal(key, data) {
-  var project = $('[data-project-id="' + data.project_id + '"]');
-  project.append('<div class="Goal col l3 m3"><ul class="collection with-header" style="background: #fff">' +
+function insertGoal(key, data, target) {
+  if (target == "dashboard") {
+    var target = $('.DashBoard');
+  } else {
+    var target = $('[data-project-id="' + data.project_id + '"]');
+  }
+  target.append('<div class="Goal col l3 m3"><ul class="card collection with-header" style="background: #fff">' +
                     '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;<span class="Goal_title">' + data.title + '</span><a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5><p>' + data.description + '</p></li>' +
                     '<span class="tasks" data-goal-id="' + key + '"></span>' +
-                    '<div class="col s12 Goal_input"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
+                    '<div class="Goal_input"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
                   '</ul></div>');
 
 }
@@ -350,6 +368,18 @@ $(document).on('keydown', '#taskName', function(e) {
       addTask(title, goal.data('goalId'), 600, index + 1);
       $(this).val('');
     }
+  }
+});
+
+$(document).on('mouseover', '.toggleMenuBtn', function () {
+  if ($(window).width() < 1400) {
+    $('.sidebar').removeClass('closed');
+  }
+});
+
+$(document).on('mouseover', '.main', function () {
+  if ($(window).width() < 1400) {
+    $('.sidebar').addClass('closed');
   }
 });
 

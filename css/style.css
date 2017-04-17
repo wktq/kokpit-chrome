@@ -3,16 +3,32 @@
   width: 240px;
   background-color: #353535;
   position: fixed;
+  left: 0;
   z-index: 4;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
+  .sidebar.closed {
+    left: -240px; }
   .sidebar .sidebar_heading {
     color: #fff;
     list-style: none;
     padding: 4px 16px;
     font-size: 11px; }
+  .sidebar .toggleMenuBtn {
+    position: absolute;
+    width: 16px;
+    height: calc(100vh - 50px);
+    text-align: center;
+    background-color: #444;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.666);
+    color: #fff;
+    right: -16px;
+    cursor: pointer; }
+    .sidebar .toggleMenuBtn i {
+      display: block;
+      margin-top: 6px; }
   .sidebar ul {
     border: none !important; }
     .sidebar ul .collection-item {
@@ -77,10 +93,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 @media screen and (max-width: 1400px) {
   .main {
-    width: 100%;
-    margin-left: 0px; }
+    width: calc(100% - 16px);
+    margin-left: 16px; }
   .sidebar {
-    width: 0px; } }
+    width: 240px; } }
 
 .colorPicker .colorPicker_item {
   width: 30px;
@@ -147,33 +163,33 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .Goal .Goal_title {
   display: inline-block;
-  width: 60%;
+  width: 55%;
   overflow: hidden;
-  white-space: pre; }
+  white-space: pre;
+  font-size: 16px; }
 
 .Goal .Goal_input {
   border-top: #ddd 1px solid;
   background-color: #fff;
-  outline: 1px solid #ddd;
-  margin-bottom: 16px; }
+  outline: 1px solid #ddd; }
 
 .Goal .Goal_action-delete, .Goal .Goal_action-setTimer {
   cursor: pointer;
   margin-left: 12px; }
 
-.projectScreen {
+.projectScreen, .DashBoard {
   background-color: #eee;
   width: 100%;
   height: calc(100vh - 50px);
-  border-bottom: 1px dashed #333;
   padding: 8px;
   display: none;
-  position: relative; }
-  .projectScreen .projectScreen_action {
+  position: relative;
+  overflow-y: scroll; }
+  .projectScreen .projectScreen_action, .DashBoard .projectScreen_action {
     position: absolute;
     top: 20px;
     right: 8px; }
-    .projectScreen .projectScreen_action li {
+    .projectScreen .projectScreen_action li, .DashBoard .projectScreen_action li {
       list-style: none;
       display: inline-block;
       padding: 8px 24px;
@@ -183,8 +199,12 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       text-align: center;
       cursor: pointer;
       font-size: 16px; }
-    .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn {
+    .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn, .DashBoard .projectScreen_action .projectScreen_action-removeBtn, .DashBoard .projectScreen_action .projectScreen_action-deleteTaskBtn {
       color: red; }
+
+.DashBoard .card {
+  height: 240px;
+  overflow: hidden; }
 
 .collection {
   overflow: visible; }
