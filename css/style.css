@@ -178,7 +178,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   cursor: pointer;
   margin-left: 12px; }
 
-.projectScreen {
+.projectScreen, .DashBoard {
   background-color: #eee;
   width: 100%;
   height: calc(100vh - 50px);
@@ -186,11 +186,11 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   padding: 8px;
   display: none;
   position: relative; }
-  .projectScreen .projectScreen_action {
+  .projectScreen .projectScreen_action, .DashBoard .projectScreen_action {
     position: absolute;
     top: 20px;
     right: 8px; }
-    .projectScreen .projectScreen_action li {
+    .projectScreen .projectScreen_action li, .DashBoard .projectScreen_action li {
       list-style: none;
       display: inline-block;
       padding: 8px 24px;
@@ -200,7 +200,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       text-align: center;
       cursor: pointer;
       font-size: 16px; }
-    .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn {
+    .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn, .DashBoard .projectScreen_action .projectScreen_action-removeBtn, .DashBoard .projectScreen_action .projectScreen_action-deleteTaskBtn {
       color: red; }
 
 .collection {

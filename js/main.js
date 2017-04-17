@@ -35,7 +35,7 @@ projectsRef.on('value', function(data) {
 
     if (n == c) {
       //挿入後の処理
-      activateScreen(key);
+      activateScreen();
       $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
   });
@@ -68,13 +68,19 @@ function activateScreen(key) {
   $('.projectScreen').hide();
   $('.collection-item').removeClass('active');
 
-  $('[data-project-key="' + key + '"]').addClass('active');
-  $('[data-project-id="' + key + '"]').show();
+  if (key) {
+    $('[data-project-key="' + key + '"]').addClass('active');
+    $('[data-project-id="' + key + '"]').show();
+  } else {
+    $('.dashboard-li').addClass('active');
+    $('.DashBoard').show();
+  }
+
 }
 
 function insertProject(key, data) {
   $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
-  $('.project-screen').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+  $('.main').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
                                   '<div class="col l12"><h5>' + data.name + '</h5></div>' +
                                   '<span class="projectScreen_action">' +
                                     '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
@@ -122,6 +128,11 @@ $('.projectModalBtn').on('click', function() {
   $('#projectName').val('');
   getAllGoals();
   getAllTasks();
+});
+
+// Dashborad
+$('.dashboard-li').on('click', function () {
+  activateScreen(null);
 });
 
 // GOALS ================================================================
