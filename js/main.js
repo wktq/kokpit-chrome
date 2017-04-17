@@ -68,12 +68,10 @@ projectsRef.on('value', function(data) {
 
     if (data.owner_email == currentUser.email) {
       insertProject(key, data);
-      c++;
-      $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
     }
-
-    activateScreen();
   });
+  $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
+  activateScreen();
 });
 
 function createProject(name, color) {
