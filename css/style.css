@@ -163,10 +163,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .Goal .Goal_title {
   display: inline-block;
-  width: 60%;
+  width: 55%;
   overflow: hidden;
   white-space: pre;
-  font-size: 18px; }
+  font-size: 16px; }
 
 .Goal .Goal_input {
   border-top: #ddd 1px solid;
@@ -201,6 +201,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       font-size: 16px; }
     .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn, .DashBoard .projectScreen_action .projectScreen_action-removeBtn, .DashBoard .projectScreen_action .projectScreen_action-deleteTaskBtn {
       color: red; }
+
+.DashBoard .card {
+  height: 240px;
+  overflow: hidden; }
 
 .collection {
   overflow: visible; }
