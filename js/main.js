@@ -66,9 +66,7 @@ projectsRef.on('value', function(data) {
     var key = snapshot.key;
     var data = snapshot.val();
 
-    if (data.owner_email == currentUser.email) {
-      insertProject(key, data);
-    }
+    insertProject(key, data);
   });
   $('.projectList').append('<a href="#projectModal"><li class="collection-item"><i class="icon ion-plus"></i>&nbsp;プロジェクトを追加</li></a>');
   activateScreen();
@@ -113,16 +111,18 @@ function activateScreen(key) {
 }
 
 function insertProject(key, data) {
-  $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
-  $('.main').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
-                                  '<div class="col l12"><h5>' + data.name + '</h5></div>' +
-                                  '<span class="projectScreen_action">' +
-                                    '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
-                                    '<li class="projectScreen_action-deleteTaskBtn"><i class="icon ion-trash-b"></i></li>' +
-                                    '<li class="projectScreen_action-removeBtn"><i class="icon ion-close"></i></li>' +
-                                  '</span>' +
-                                  '<ul class="goal-list"></ul>' +
-                                '</div>');
+  if (data.owner_email == currentUser.email) {
+    $('.projectList').prepend('<li class="collection-item projectList-list" style="text-align: left" data-project-key="' + key + '"><span style="display: inline-block; margin-right: 8px; width: 10px; height: 10px; border-radius: 5px; background-color: ' + data.color + '"></span>' + data.name + '</li>');
+    $('.main').prepend('<div class="projectScreen" style="border-color: ' + data.color + '" data-project-id="' + key + '">' +
+                                    '<div class="col l12"><h5>' + data.name + '</h5></div>' +
+                                    '<span class="projectScreen_action">' +
+                                      '<li class="projectScreen_action-editBtn"><i class="icon ion-edit"></i></li>' +
+                                      '<li class="projectScreen_action-deleteTaskBtn"><i class="icon ion-trash-b"></i></li>' +
+                                      '<li class="projectScreen_action-removeBtn"><i class="icon ion-close"></i></li>' +
+                                    '</span>' +
+                                    '<ul class="goal-list"></ul>' +
+                                  '</div>');
+  }
 }
 
 //PROJECTS EVENT
