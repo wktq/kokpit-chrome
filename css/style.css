@@ -3,16 +3,31 @@
   width: 240px;
   background-color: #353535;
   position: fixed;
+  left: 0;
   z-index: 4;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
+  .sidebar.closed {
+    left: -240px; }
   .sidebar .sidebar_heading {
     color: #fff;
     list-style: none;
     padding: 4px 16px;
     font-size: 11px; }
+  .sidebar .toggleMenuBtn {
+    position: absolute;
+    width: 16px;
+    height: calc(100vh - 50px);
+    text-align: center;
+    background-color: #555;
+    color: #fff;
+    right: -16px;
+    cursor: pointer; }
+    .sidebar .toggleMenuBtn i {
+      display: block;
+      margin-top: 6px; }
   .sidebar ul {
     border: none !important; }
     .sidebar ul .collection-item {
@@ -77,10 +92,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 @media screen and (max-width: 1400px) {
   .main {
-    width: 100%;
-    margin-left: 0px; }
+    width: calc(100% - 16px);
+    margin-left: 16px; }
   .sidebar {
-    width: 0px; } }
+    width: 240px; } }
 
 .colorPicker .colorPicker_item {
   width: 30px;
@@ -149,7 +164,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   display: inline-block;
   width: 60%;
   overflow: hidden;
-  white-space: pre; }
+  white-space: pre;
+  font-size: 18px; }
 
 .Goal .Goal_input {
   border-top: #ddd 1px solid;

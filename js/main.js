@@ -354,6 +354,18 @@ $(document).on('keydown', '#taskName', function(e) {
   }
 });
 
+$(document).on('mouseover', '.toggleMenuBtn', function () {
+  if ($(window).width() < 1400) {
+    $('.sidebar').removeClass('closed');
+  }
+});
+
+$(document).on('mouseover', '.main', function () {
+  if ($(window).width() < 1400) {
+    $('.sidebar').addClass('closed');
+  }
+});
+
 // toMinutes
 function toMinutes(seconds){
   var rem = seconds % 60;

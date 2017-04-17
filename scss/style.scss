@@ -3,17 +3,38 @@
   width: 240px;
   background-color: #353535;
   position: fixed;
+  left: 0;
   z-index: 4;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 
+  &.closed {
+    left: -240px;
+  }
+
   .sidebar_heading {
     color: #fff;
     list-style: none;
     padding: 4px 16px;
     font-size: 11px;
+  }
+
+  .toggleMenuBtn {
+    position: absolute;
+    width: 16px;
+    height: calc(100vh - 50px);
+    text-align: center;
+    background-color: #555;
+    color: #fff;
+    right: -16px;
+    cursor: pointer;
+
+    i {
+      display: block;
+      margin-top: 6px;
+    }
   }
 
   ul {
@@ -100,12 +121,12 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 @media screen and (max-width:1400px) {
   .main {
-    width: 100%;
-    margin-left: 0px;
+    width: calc(100% - 16px);
+    margin-left: 16px;
   }
 
   .sidebar {
-    width: 0px;
+    width: 240px;
   }
 }
 
@@ -221,6 +242,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     width: 60%;
     overflow: hidden;
     white-space: pre;
+    font-size: 18px;
   }
 
   .Goal_input {
