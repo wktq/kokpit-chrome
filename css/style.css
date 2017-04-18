@@ -217,6 +217,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 .card .card-content p {
   font-size: 13px !important; }
 
+.card .card-image img {
+  max-height: 200px;
+  object-fit: cover; }
+
 .card .cardMask {
   position: absolute;
   top: 0;
