@@ -565,6 +565,8 @@ $(document).on('click', '#addMemoBtn', function() {
     addMemo(title, content);
     $('#memoTitle').val('');
     $('#memoContent').val('');
+  } else {
+    alert('タイトルは必須です');
   }
 });
 
