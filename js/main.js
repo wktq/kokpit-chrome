@@ -398,6 +398,12 @@ function updateScreen() {
       updateIndexCard();
     }
   });
+
+  $(".memos").sortable({
+    update: function( event, ui ) {
+      updateIndexMemo();
+    }
+  });
 }
 
 function updateIndexTask(goalId, dashboard) {
@@ -415,6 +421,13 @@ function updateIndexCard() {
   });
 }
 
+function updateIndexMemo() {
+  $('.memos .Memo').each(function(index) {
+    var key = $(this).data('memoId');
+    changeIndexMemo(key, index);
+  });
+}
+
 // CARDS =========================================================-
 function changeIndexCard(key, index) {
   cardsRef.child(key).update({
@@ -424,6 +437,12 @@ function changeIndexCard(key, index) {
 
 function changeIndexTask(key, index) {
   tasksRef.child(key).update({
+    index: index
+  });
+}
+
+function changeIndexMemo(key, index) {
+  memosRef.child(key).update({
     index: index
   });
 }
@@ -537,9 +556,12 @@ memosRef.orderByChild('index').on('value', function(data) {
 });
 
 function addMemo(title, content) {
+  var index = $('.Memo').length + 1;
+  console.log(index);
   memosRef.push({
     title: title,
     content: content,
+    index: index,
     owner_email: currentUser.email
   });
 }
