@@ -314,6 +314,38 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   }
 }
 
+.card {
+  .cardMask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+
+    .cardMask_action {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+
+      i {
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        padding: 4px;
+
+        &.deleteMemo {
+          color: red;
+        }
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 .collection {
   overflow: visible;
 }

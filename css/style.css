@@ -210,9 +210,30 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   cursor: pointer; }
 
 .SlackMsg .SlackMsg_input {
-  padding: 8px 16px;
+  padding: 8px;
   box-sizing: border-box;
   color: #fff; }
+
+.card .cardMask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0; }
+  .card .cardMask .cardMask_action {
+    position: absolute;
+    right: 8px;
+    top: 8px; }
+    .card .cardMask .cardMask_action i {
+      cursor: pointer;
+      display: inline-block;
+      font-size: 16px;
+      padding: 4px; }
+      .card .cardMask .cardMask_action i.deleteMemo {
+        color: red; }
+  .card .cardMask:hover {
+    opacity: 1; }
 
 .collection {
   overflow: visible; }

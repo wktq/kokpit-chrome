@@ -59,6 +59,7 @@ var projectsRef = firebase.database().ref('projects/'); //プロジェクト
 var goalsRef = firebase.database().ref('goals/'); //ゴール
 var tasksRef = firebase.database().ref('tasks/'); //タスク
 var cardsRef = firebase.database().ref('cards/'); //カード
+var memosRef = firebase.database().ref('memos/');
 
 // PROJECTS ======================================================
 projectsRef.on('value', function(data) {
@@ -484,7 +485,7 @@ $(document).on('click', '.DashCard .card-action', function() {
   return false;
 });
 
-$(document).on('click', '.card-action-edit', function() {
+$(document).on('click', '.DashCard .card-action-edit', function() {
   var cardId = $(this).parents('.DashCard').data('cardId');
   console.log(cardId);
 });
@@ -516,8 +517,64 @@ $('.SlackMsg_input').on('keydown', function(e) {
   }
 });
 
-// OTHERS =========================================================-
+// MEMOS =========================================================-
+memosRef.orderByChild('index').on('value', function(data) {
+  $('.Memo').remove();
 
+  data.forEach(function(snapshot) {
+    var key = snapshot.key;
+    var data = snapshot.val();
+
+    insertMemo(key, data);
+  });
+  updateScreen();
+});
+
+function addMemo(title, content) {
+  memosRef.push({
+    title: title,
+    content: content,
+    owner_email: currentUser.email
+  });
+}
+
+function removeMemo(key) {
+  memosRef.child(key).remove();
+}
+
+function insertMemo(key, data) {
+  $('.memos').append('<div class="Memo card darken-1" data-memo-id="' + key + '">' +
+                        '<div class="card-content">' +
+                          '<div class="cardMask">' +
+                            '<span class="cardMask_action">' +
+                              '<i class="editMemo icon ion-edit"></i>' +
+                              '<i class="deleteMemo icon ion-close"></i>' +
+                            '</span>' +
+                          '</div>' +
+                          '<span class="card-title">' + data.title + '</span>' +
+                          '<p>' + data.content + '</p>' +
+                        '</div>' +
+                      '</div>');
+}
+
+$(document).on('click', '#addMemoBtn', function() {
+  var title = $(this).parents('#memoForm').find('#memoTitle').val();
+  var content = $(this).parents('#memoForm').find('#memoContent').val();
+
+  if (title != '') {
+    addMemo(title, content);
+    $('#memoTitle').val('');
+    $('#memoContent').val('');
+  }
+});
+
+$(document).on('click', '.deleteMemo', function() {
+  var key = $(this).parents('.Memo').data('memoId');
+  removeMemo(key);
+});
+
+
+// OTHERS =========================================================-
 
 // Color Picker
 $('#projectColor').val($('.colorPicker_item.active').data('cpColor'));
