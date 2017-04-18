@@ -391,15 +391,80 @@ function updateScreen() {
       updateIndex(currentGoalId, true);
     }
   });
+
+  $(".cards").sortable({
+    update: function( event, ui ) {
+      updateIndexTask();
+    }
+  });
 }
 
-function updateIndex(goalId, dashboard) {
+function updateIndexTask(goalId, dashboard) {
   var goal = $('.Dashboard').find('[data-goal-id="' + goalId + '"]');
   goal.find('.Task').each(function(index) {
     var key = $(this).data('taskId');
     changeIndexTask(key, index);
   });
 }
+
+function updateIndexCard() {
+  $('.cards').each(function(index) {
+    var key = $(this).data('cardId');
+    changeIndexCard(key, index);
+  });
+}
+
+// CARDS =========================================================-
+function changeIndexCard(key, index) {
+  cardsRef.child(key).update({
+    index: index
+  });
+}
+
+function createCard(title, type, index, size, htmlContent, bgColor, txColor, links, imageUrl) {
+  //リンクがないやつは#入れる
+  //
+  cardsRef.push({
+    title: title,
+    type: type,
+    index: index,
+    size: size,
+    html_content: htmlContent,
+    bg_color: bgColor,
+    text_color: txColor,
+    links: links,
+    image_url: imageUrl,
+    owner_email: currentUser.email
+  });
+}
+
+function insertCard(key, data) {
+  $('.cards').append('<div class="DashCard card col ' + data.size + ' ' + data.bg_color + '" style="margin-top: 0px;">' +
+                        '<div class="card-image">' +
+                          '<img src="' + data.image_url + '">' +
+                        '</div>' +
+                        '<div class="card-content" style="color: ' + data.text_color + '">' +
+                          '<span class="card-title">' + data.title + '</span>' +
+                          '<p>' + data.html_content + '</p>' +
+                        '</div>' +
+                        '<div class="card-action">' +
+                          '<a class="popupLink" data-link="">リンクを開く</a>' +
+                        '</div>' +
+                      '</div>');
+}
+
+cardsRef.orderByChild('index').on('value', function(data) {
+  $('.DashCard').remove();
+
+  data.forEach(function(snapshot) {
+    var key = snapshot.key;
+    var data = snapshot.val();
+
+    insertCard(key, data);
+  });
+  updateScreen();
+});
+
 
 // OTHERS =========================================================-
 
