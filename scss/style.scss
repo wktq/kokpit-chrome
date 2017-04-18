@@ -91,6 +91,22 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   line-height: 50px;
 }
 
+.formModal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.3);
+  z-index: 10;
+  display: none;
+
+  .card {
+    width: 600px;
+    margin: 10vh auto;
+  }
+}
+
 .main {
   width: calc(100% - 240px);
   height: calc(100vh - 50px);

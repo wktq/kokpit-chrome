@@ -173,6 +173,29 @@
         <a href="#!" class="modal-action modal-close waves-effect waves-dark btn goalModalBtn">ゴールを追加</a>
       </div>
     </div>
+
+    <div id="memoModal" class="formModal">
+      <div class="card">
+        <div class="row">
+          <form class="col s12" id="memoUpdateForm">
+            <div class="row" style="margin-top: 12px; margin-bottom: 4px;">
+              <div class="input-field col s12">
+                <input placeholder="買い物リスト" id="memoTitle" type="text" class="validate" style="margin-bottom: 4px;">
+                <label for="first_name" class="active">メモのタイトル</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="memoContent" class="materialize-textarea" placeholder="USBを購入する" rows="10" style="margin-bottom: 0px;"></textarea>
+                <label for="textarea1" class="active">メモの内容</label>
+              </div>
+            </div>
+            <a class="waves-effect waves-light btn" id="updateMemoBtn" style="display: block">メモを追加</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <ul id='time_dropdown' class='dropdown-content'>
       <li><a class="change-time-btn" data-task-time="300">5分</a></li>
       <li><a class="change-time-btn" data-task-time="600">10分</a></li>

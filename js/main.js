@@ -579,8 +579,8 @@ function insertMemo(key, data) {
                               '<i class="deleteMemo icon ion-close"></i>' +
                             '</span>' +
                           '</div>' +
-                          '<span class="card-title">' + data.title + '</span>' +
-                          '<p>' + data.content + '</p>' +
+                          '<span class="card-title Memo_title">' + data.title + '</span>' +
+                          '<p class="Memo_content">' + data.content + '</p>' +
                         '</div>' +
                       '</div>');
 }
@@ -598,11 +598,32 @@ $(document).on('click', '#addMemoBtn', function() {
   }
 });
 
+$(document).on('click', '#updateMemoBtn', function() {
+  var title = $(this).parents('#memoUpdateForm').find('#memoTitle').val();
+  var content = $(this).parents('#memoUpdateForm').find('#memoContent').val();
+  $('#memoModal').hide();
+
+  console.log(title + content);
+});
+
 $(document).on('click', '.deleteMemo', function() {
   var key = $(this).parents('.Memo').data('memoId');
   removeMemo(key);
 });
 
+$(document).on('click', '.editMemo', function() {
+  var memo = $(this).parents('.Memo');
+  var key = memo.data('memoId');
+  var prevTitle = memo.find('.Memo_title').text();
+  var prevContent = memo.find('.Memo_content').text();
+  openMemoModal(prevTitle, prevContent);
+});
+
+function openMemoModal(prevTitle, prevContent) {
+  $('#memoModal').show();
+  $('#memoUpdateForm #memoTitle').val(prevTitle);
+  $('#memoUpdateForm #memoContent').val(prevContent);
+}
 
 // OTHERS =========================================================-
 
