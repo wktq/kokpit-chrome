@@ -439,16 +439,18 @@ function createCard(title, type, index, size, htmlContent, bgColor, txColor, lin
 }
 
 function insertCard(key, data) {
-  $('.cards').append('<div class="DashCard card col ' + data.size + ' ' + data.bg_color + '" style="margin-top: 0px;">' +
-                        '<div class="card-image">' +
-                          '<img src="' + data.image_url + '">' +
-                        '</div>' +
-                        '<div class="card-content" style="color: ' + data.text_color + '">' +
-                          '<span class="card-title">' + data.title + '</span>' +
-                          '<p>' + data.html_content + '</p>' +
-                        '</div>' +
-                        '<div class="card-action">' +
-                          '<a class="popupLink" data-link="">リンクを開く</a>' +
+  $('.cards').append('<div class="DashCard col ' + data.size + '">' +
+                        '<div class="card ' + data.bg_color + '" style="margin-top: 0px;">' +
+                          '<div class="card-image">' +
+                            '<img src="' + data.image_url + '">' +
+                          '</div>' +
+                          '<div class="card-content" style="color: ' + data.text_color + '">' +
+                            '<span class="card-title">' + data.title + '</span>' +
+                            '<p>' + data.html_content + '</p>' +
+                          '</div>' +
+                          '<div class="card-action">' +
+                            '<a class="popupLink" data-link="">リンクを開く</a>' +
+                          '</div>' +
                         '</div>' +
                       '</div>');
 }
