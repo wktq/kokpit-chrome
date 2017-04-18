@@ -395,7 +395,7 @@ function updateScreen() {
 
   $(".cards").sortable({
     update: function( event, ui ) {
-      updateIndexTask();
+      updateIndexCard();
     }
   });
 }
@@ -409,7 +409,7 @@ function updateIndexTask(goalId, dashboard) {
 }
 
 function updateIndexCard() {
-  $('.cards').each(function(index) {
+  $('.cards .DashCard').each(function(index) {
     var key = $(this).data('cardId');
     changeIndexCard(key, index);
   });
@@ -418,6 +418,12 @@ function updateIndexCard() {
 // CARDS =========================================================-
 function changeIndexCard(key, index) {
   cardsRef.child(key).update({
+    index: index
+  });
+}
+
+function changeIndexTask(key, index) {
+  tasksRef.child(key).update({
     index: index
   });
 }
