@@ -49,6 +49,7 @@ var cardsRef = firebase.database().ref('cards/'); //カード
 // PROJECTS ======================================================
 projectsRef.on('value', function(data) {
   $('.projectList').html('');
+
   data.forEach(function(snapshot) {
     var key = snapshot.key;
     var data = snapshot.val();
@@ -197,7 +198,7 @@ function createGoal(title, projectId, description, priority) {
 
 function insertGoal(key, data, target) {
   if (target == "dashboard") {
-    var target = $('#DashBoard_col-3');
+    var target = $('#DashBoard_col-1');
     var size = '';
   } else {
     var target = $('[data-project-id="' + data.project_id + '"]');
@@ -246,7 +247,7 @@ $(document).on('click', '.Goal_action-setTimer', function() {
 });
 
 // TASKS =========================================================-
-tasksRef.on('value', function(data) {
+tasksRef.orderByChild('index').on('value', function(data) {
   $('.Task').remove();
 
   data.forEach(function(snapshot) {
@@ -283,6 +284,12 @@ function uncheckTask(key) {
   });
 }
 
+function changeIndexTask(key, index) {
+  tasksRef.child(key).update({
+    index: index
+  });
+}
+
 function setTimeTask(key, time) {
   tasksRef.child(key).update({
     time: time
@@ -308,7 +315,7 @@ function insertTask(key, data) {
 }
 
 function getAllTasks() {
-  tasksRef.once('value').then(function(snapshot) {
+  tasksRef.orderByChild('index').once('value').then(function(snapshot) {
     $('.tasks').html('');
 
     snapshot.forEach(function(snapshot) {
@@ -364,7 +371,20 @@ function updateScreen() {
     }
   );
 
-  $(".tasks").sortable();
+  $(".tasks").sortable({
+    update: function( event, ui ) {
+      var currentGoalId = ui.item.parents('.tasks').data('goalId');
+      updateIndex(currentGoalId, true);
+    }
+  });
+}
+
+function updateIndex(goalId, dashboard) {
+  var goal = $('.Dashboard').find('[data-goal-id="' + goalId + '"]');
+  goal.find('.Task').each(function(index) {
+    var key = $(this).data('taskId');
+    changeIndexTask(key, index);
+  });
 }
 
 // OTHERS =========================================================-
