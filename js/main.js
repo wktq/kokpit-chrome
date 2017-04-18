@@ -389,7 +389,7 @@ function updateScreen() {
   $(".tasks").sortable({
     update: function( event, ui ) {
       var currentGoalId = ui.item.parents('.tasks').data('goalId');
-      updateIndex(currentGoalId, true);
+      updateIndexTask(currentGoalId, true);
     }
   });
 
