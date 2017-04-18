@@ -291,9 +291,12 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 }
 
 .DashBoard {
-  .card {
-    height: 188px;
-    overflow: hidden;
+  .DashBoard_col {
+
+    .DashBoard_col-title {
+      text-align: center;
+      font-size: 16px;
+    }
   }
 }
 
