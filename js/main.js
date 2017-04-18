@@ -449,7 +449,7 @@ function insertCard(key, data) {
                             '<p>' + data.html_content + '</p>' +
                           '</div>' +
                           '<div class="card-action">' +
-                            '<a class="popupLink" data-link="">リンクを開く</a>' +
+                            '<a class="popupLink" data-link="' + data.links + '">リンクを開く</a>' +
                           '</div>' +
                         '</div>' +
                       '</div>');
@@ -467,6 +467,19 @@ cardsRef.orderByChild('index').on('value', function(data) {
   updateScreen();
 });
 
+
+$(document).on('click', '.popupLink', function() {
+  var links = $(this).data('link');
+  if (links.match(/,/)) {
+    ary = links.split(',');
+    ary.forEach(function(val,index){
+      window.open(val);
+    });
+  } else {
+    window.open(links);
+  }
+
+});
 
 // OTHERS =========================================================-
 
