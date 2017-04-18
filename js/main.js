@@ -20,24 +20,38 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('.userName').text(currentUser.email);
     swal.close();
   } else {
-    OAuth.initialize('RiFT8OjQLXUWmCkGjdmQm-VyJLU');
-    OAuth.popup("github", function(err, res) {
-      var token = res.access_token;
-      console.log(token);
-      var credential = firebase.auth.GithubAuthProvider.credential(token);
-      firebase.auth().signInWithCredential(credential).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
-        console.warn(errorMessage);
+    swal({
+      title: 'ログインしてください',
+      text: "Githubでログインできます。",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Githubでログイン',
+      cancelButtonColor: '#bbb',
+      cancelButtonText: 'キャンセル'
+    }).then(function () {
+      OAuth.initialize('RiFT8OjQLXUWmCkGjdmQm-VyJLU');
+      OAuth.popup("github", function(err, res) {
+        var token = res.access_token;
+        console.log(token);
+        var credential = firebase.auth.GithubAuthProvider.credential(token);
+        firebase.auth().signInWithCredential(credential).catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          var email = error.email;
+          var credential = error.credential;
+          console.warn(errorMessage);
+        });
       });
-    });
+    })
   }
 });
 $(document).on('click', '.logoutBtn', function() {
-  alert('as');
-  firebase.auth().signOut();
+  firebase.auth().signOut().then(function() {
+    console.log('ログアウト完了');
+  }, function(error) {
+    console.log(error);
+  });
 });
 
 // Define Refs
