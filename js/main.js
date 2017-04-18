@@ -439,7 +439,7 @@ function createCard(title, type, index, size, htmlContent, bgColor, txColor, lin
 }
 
 function insertCard(key, data) {
-  $('.cards').append('<div class="DashCard col ' + data.size + '">' +
+  $('.cards').append('<div data-card-id="' + key + '" class="DashCard col ' + data.size + '" data-link="' + data.links + '">' +
                         '<div class="card ' + data.bg_color + '" style="margin-top: 0px;">' +
                           '<div class="card-image">' +
                             '<img src="' + data.image_url + '">' +
@@ -449,7 +449,7 @@ function insertCard(key, data) {
                             '<p>' + data.html_content + '</p>' +
                           '</div>' +
                           '<div class="card-action">' +
-                            '<a class="popupLink" data-link="' + data.links + '">リンクを開く</a>' +
+                            '<a class="card-action-edit">編集</a>' +
                           '</div>' +
                         '</div>' +
                       '</div>');
@@ -468,7 +468,7 @@ cardsRef.orderByChild('index').on('value', function(data) {
 });
 
 
-$(document).on('click', '.popupLink', function() {
+$(document).on('click', '.DashCard', function() {
   var links = $(this).data('link');
   if (links.match(/,/)) {
     ary = links.split(',');
@@ -478,7 +478,42 @@ $(document).on('click', '.popupLink', function() {
   } else {
     window.open(links);
   }
+});
 
+$(document).on('click', '.DashCard .card-action', function() {
+  return false;
+});
+
+$(document).on('click', '.card-action-edit', function() {
+  var cardId = $(this).parents('.DashCard').data('cardId');
+  console.log(cardId);
+});
+
+$('.SlackMsg_input').on('keydown', function(e) {
+  if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+    var msg = $(this).val();
+
+    if (msg == "") {
+      console.log('message cant be blank');
+    } else {
+      var url = 'https://slack.com/api/chat.postMessage';
+      var data = {
+          token: 'xoxp-37436581137-37433110709-170632250101-270fc8b06a338ccda2e07b5413b50340',
+          channel: '#news',
+          username: 'from_kokpit',
+          text: msg
+      };
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          data: data,
+          success: function (data) {
+            console.log('できました');
+          }
+      });
+    }
+  }
 });
 
 // OTHERS =========================================================-

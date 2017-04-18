@@ -301,8 +301,15 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 }
 
 .DashCard {
-  .popupLink {
-    cursor: pointer;
+  cursor: pointer;
+
+}
+
+.SlackMsg {
+  .SlackMsg_input {
+    padding: 8px 16px;
+    box-sizing: border-box;
+    color: #fff;
   }
 }
 
