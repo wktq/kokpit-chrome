@@ -7,11 +7,28 @@ var config = {
   messagingSenderId: "48915756357"
 };
 var provider = new firebase.auth.GithubAuthProvider();
-provider.addScope('repo');
-
 var currentUser = new Object();
-
+provider.addScope('repo');
 firebase.initializeApp(config);
+
+function loadDeliveryInfo() {
+  var deliveryId = $('.delivery-info').data('deliveryId');
+  $.ajax({
+    type: 'GET',
+    url: 'http://nanoappli.com/tracking/api/' + deliveryId + '.json',
+    dataType: 'json',
+    success: function(json){
+      var status = json;
+      var statusList = json.statusList;
+      var statusHtml = '';
+      $.each(statusList,function(index,val){
+        console.log(val);
+        statusHtml = statusHtml + '<li style="list-style: none">' + val.date + ' ' + val.time + ':' + val.status + '</li>';
+      });
+      $('.delivery-info').html('<h5 style="font-size: 16px;">注文番号：' + json.slipNo + 'の注文状況</h5>' + '<p>現在の状況：' + json.status + '</p>' + statusHtml);
+    }
+  });
+}
 
 // USER =====================================
 firebase.auth().onAuthStateChanged(function(user) {
@@ -449,7 +466,7 @@ function changeIndexMemo(key, index) {
 
 function createCard(title, type, index, size, htmlContent, bgColor, txColor, links, imageUrl) {
   //リンクがないやつは#入れる
-  //
+  //createCard('宅配状況', 'delivery', '5', 'm6', '404147073724', '', '#757575', '', '');
   cardsRef.push({
     title: title,
     type: type,
@@ -465,14 +482,26 @@ function createCard(title, type, index, size, htmlContent, bgColor, txColor, lin
 }
 
 function insertCard(key, data) {
+
+  if (data.image_url != "") {
+    var cardImageHtml ='<div class="card-image"><img src="' + data.image_url + '"></div>';
+  } else {
+    var cardImageHtml = "";
+  }
+
+
+  if (data.type == 'delivery') {
+    var contentHtml = '<div class="delivery-info" data-delivery-id="' + data.html_content + '"></div>';
+    var titleIcon = '<i class="icon ion-ios-box"></i>';
+  } else {
+    var contentHtml = '<p>' + data.html_content + '</p>';
+    var titleIcon = '';
+  }
+
   $('.cards').append('<div data-card-id="' + key + '" class="DashCard col ' + data.size + '" data-link="' + data.links + '">' +
-                        '<div class="card ' + data.bg_color + '" style="margin-top: 0px;">' +
-                          '<div class="card-image">' +
-                            '<img src="' + data.image_url + '">' +
-                          '</div>' +
+                        '<div class="card ' + data.bg_color + '" style="margin-top: 0px;">' + cardImageHtml +
                           '<div class="card-content" style="color: ' + data.text_color + '">' +
-                            '<span class="card-title">' + data.title + '</span>' +
-                            '<p>' + data.html_content + '</p>' +
+                            '<span class="card-title">' + titleIcon + ' ' + data.title + '</span>' + contentHtml +
                           '</div>' +
                           '<div class="card-action">' +
                             '<a class="card-action-edit">編集</a>' +
@@ -491,6 +520,7 @@ cardsRef.orderByChild('index').on('value', function(data) {
     insertCard(key, data);
   });
   updateScreen();
+  loadDeliveryInfo();
 });
 
 
