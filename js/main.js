@@ -230,7 +230,7 @@ function createGoal(title, projectId, description, priority) {
 
 function insertGoal(key, data, target) {
   if (target == "dashboard") {
-    var target = $('#DashBoard_col-1');
+    var target = $('#DashBoard_col-1 .goals');
     var size = '';
   } else {
     var target = $('[data-project-id="' + data.project_id + '"]');
