@@ -82,6 +82,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     .formModal .card textarea {
       height: 480px;
       overflow-y: scroll; }
+  .formModal.open {
+    display: block; }
 
 .main {
   width: calc(100% - 240px);
@@ -219,7 +221,9 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       color: red; }
 
 .DashBoard .DashBoard_col {
-  position: relative; }
+  position: relative;
+  height: calc(100vh - 66px);
+  overflow-y: scroll; }
   .DashBoard .DashBoard_col .DashBoard_col-title {
     text-align: center;
     font-size: 16px;

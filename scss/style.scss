@@ -110,6 +110,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       overflow-y: scroll;
     }
   }
+
+  &.open {
+    display: block;
+  }
 }
 
 .main {
@@ -314,6 +318,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 .DashBoard {
   .DashBoard_col {
     position: relative;
+    height: calc(100vh - 66px);
+    overflow-y: scroll;
 
     .DashBoard_col-title {
       text-align: center;

@@ -578,7 +578,7 @@ function removeMemo(key) {
 }
 
 function insertMemo(key, data) {
-  $('.memos').append('<div class="Memo card darken-1" data-memo-id="' + key + '">' +
+  $('.memos').prepend('<div class="Memo card darken-1" data-memo-id="' + key + '">' +
                         '<div class="card-content">' +
                           '<div class="cardMask">' +
                             '<span class="cardMask_action">' +
@@ -601,10 +601,14 @@ $(document).on('click', '#memoFormBtn', function() {
   var content = $('#memoForm #memoContent').val();
   var key = $('#memoForm #memoId').val();
   var type = $('#memoForm #formType').val();
-  $('#memoModal').hide();
+  $('#memoModal').removeClass('open');
   switch (type) {
     case 'create':
-      addMemo(title, content);
+      if (title == '') {
+        alert('タイトルを入力してください');
+      } else {
+        addMemo(title, content);
+      }
       break;
     case 'update':
       updateMemo(key, title, content);
@@ -629,13 +633,13 @@ $(document).on('click', '.editMemo', function() {
 
 function openMemoModal(type, prevTitle, prevContent, key) {
   if (type == 'create') {
-    $('#memoModal').show();
+    $('#memoModal').addClass('open');
     $('#memoForm #memoTitle').val('');
     $('#memoForm #memoContent').val('');
     $('#memoForm #memoId').val('');
     $('#memoForm #formType').val(type);
   } else if (type == 'update') {
-    $('#memoModal').show();
+    $('#memoModal').addClass('open');
     $('#memoForm #memoTitle').val(prevTitle);
     $('#memoForm #memoContent').val(prevContent);
     $('#memoForm #memoId').val(key);
