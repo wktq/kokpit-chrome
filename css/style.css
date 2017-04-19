@@ -75,7 +75,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   left: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
-  display: none; }
+  display: none;
+  opacity: 0; }
   .formModal .card {
     width: 600px;
     margin: 10vh auto; }
@@ -83,7 +84,16 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
       height: 480px;
       overflow-y: scroll; }
   .formModal.open {
+    animation: anime1 .2s ease;
+    opacity: 1;
     display: block; }
+
+@keyframes anime1 {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1;
+    display: block; } }
 
 .main {
   width: calc(100% - 240px);
@@ -223,7 +233,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 .DashBoard .DashBoard_col {
   position: relative;
   height: calc(100vh - 66px);
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  overflow-x: hidden; }
   .DashBoard .DashBoard_col .DashBoard_col-title {
     text-align: center;
     font-size: 16px;

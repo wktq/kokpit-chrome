@@ -100,6 +100,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   background-color: rgba(0,0,0,.3);
   z-index: 10;
   display: none;
+  opacity: 0;
 
   .card {
     width: 600px;
@@ -112,9 +113,22 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   }
 
   &.open {
+    animation: anime1 .2s ease;
+    opacity: 1;
     display: block;
   }
 }
+
+@keyframes anime1 {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+
 
 .main {
   width: calc(100% - 240px);
@@ -320,6 +334,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     position: relative;
     height: calc(100vh - 66px);
     overflow-y: scroll;
+    overflow-x: hidden;
 
     .DashBoard_col-title {
       text-align: center;

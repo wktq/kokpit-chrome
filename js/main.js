@@ -638,12 +638,16 @@ function openMemoModal(type, prevTitle, prevContent, key) {
     $('#memoForm #memoContent').val('');
     $('#memoForm #memoId').val('');
     $('#memoForm #formType').val(type);
+    $('#memoFormBtn').text('メモを追加');
+    $('#memoFormBtn').removeClass('orange');
   } else if (type == 'update') {
     $('#memoModal').addClass('open');
     $('#memoForm #memoTitle').val(prevTitle);
     $('#memoForm #memoContent').val(prevContent);
     $('#memoForm #memoId').val(key);
     $('#memoForm #formType').val(type);
+    $('#memoFormBtn').text('メモを更新');
+    $('#memoFormBtn').addClass('orange');
   }
 }
 
