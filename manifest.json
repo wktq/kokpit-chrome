@@ -1,7 +1,7 @@
 {
-  "name": "Blank new tab page",
-  "description": "Override the new tab page with a blank one",
-  "version": "0.2",
+  "name": "Kokpit",
+  "description": "Personal Project management and Tools in your New Tab",
+  "version": "1",
   "incognito": "split",
   "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "content_scripts": [{
@@ -14,5 +14,8 @@
   "externally_connectable": {
     "matches": ["https://oauth.io/*"]
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "icons" : {
+    "128": "icon.png"
+  }
 }
