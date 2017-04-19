@@ -229,7 +229,8 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   color: #fff; }
 
 .card .card-content p {
-  font-size: 13px !important; }
+  font-size: 13px !important;
+  white-space: pre-line; }
 
 .card .card-image img {
   max-height: 200px;
