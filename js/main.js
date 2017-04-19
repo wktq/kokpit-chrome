@@ -236,7 +236,7 @@ function insertGoal(key, data, target) {
     var target = $('[data-project-id="' + data.project_id + '"]');
     var size = 'col m3';
   }
-  target.append('<div class="Goal ' + size + '"><ul class="card collection with-header" style="background: #fff">' +
+  target.prepend('<div class="Goal ' + size + '"><ul class="card collection with-header" style="background: #fff">' +
                     '<li class="collection-header"><span class=""></span><h5><i class="material-icons">flag</i>&nbsp;<span class="Goal_title">' + data.title + '</span><a class="secondary-content Goal_action-delete"><i class="material-icons" style="color: red">close</i></a><a class="secondary-content Goal_action-setTimer"><i class="material-icons">timer</i></a></h5><p>' + data.description + '</p></li>' +
                     '<span class="tasks" data-goal-id="' + key + '"></span>' +
                     '<div class="Goal_input"><input id="taskName" style="margin: 0;" type="text" placeholder="タスク名を入力（Enterで追加）"></div>' +
