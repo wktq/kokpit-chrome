@@ -566,6 +566,13 @@ function addMemo(title, content) {
   });
 }
 
+function updateMemo(key, title, content) {
+  memosRef.child(key).update({
+    title: title,
+    content: content
+  });
+}
+
 function removeMemo(key) {
   memosRef.child(key).remove();
 }
@@ -586,24 +593,25 @@ function insertMemo(key, data) {
 }
 
 $(document).on('click', '#addMemoBtn', function() {
-  var title = $(this).parents('#memoForm').find('#memoTitle').val();
-  var content = $(this).parents('#memoForm').find('#memoContent').val();
-
-  if (title != '') {
-    addMemo(title, content);
-    $('#memoTitle').val('');
-    $('#memoContent').val('');
-  } else {
-    alert('タイトルは必須です');
-  }
+  openMemoModal('create');
 });
 
-$(document).on('click', '#updateMemoBtn', function() {
-  var title = $(this).parents('#memoUpdateForm').find('#memoTitle').val();
-  var content = $(this).parents('#memoUpdateForm').find('#memoContent').val();
+$(document).on('click', '#memoFormBtn', function() {
+  var title = $('#memoForm #memoTitle').val();
+  var content = $('#memoForm #memoContent').val();
+  var key = $('#memoForm #memoId').val();
+  var type = $('#memoForm #formType').val();
   $('#memoModal').hide();
+  switch (type) {
+    case 'create':
+      addMemo(title, content);
+      break;
+    case 'update':
+      updateMemo(key, title, content);
+      break;
+    default:
 
-  console.log(title + content);
+  }
 });
 
 $(document).on('click', '.deleteMemo', function() {
@@ -616,13 +624,23 @@ $(document).on('click', '.editMemo', function() {
   var key = memo.data('memoId');
   var prevTitle = memo.find('.Memo_title').text();
   var prevContent = memo.find('.Memo_content').text();
-  openMemoModal(prevTitle, prevContent);
+  openMemoModal('update', prevTitle, prevContent, key);
 });
 
-function openMemoModal(prevTitle, prevContent) {
-  $('#memoModal').show();
-  $('#memoUpdateForm #memoTitle').val(prevTitle);
-  $('#memoUpdateForm #memoContent').val(prevContent);
+function openMemoModal(type, prevTitle, prevContent, key) {
+  if (type == 'create') {
+    $('#memoModal').show();
+    $('#memoForm #memoTitle').val('');
+    $('#memoForm #memoContent').val('');
+    $('#memoForm #memoId').val('');
+    $('#memoForm #formType').val(type);
+  } else if (type == 'update') {
+    $('#memoModal').show();
+    $('#memoForm #memoTitle').val(prevTitle);
+    $('#memoForm #memoContent').val(prevContent);
+    $('#memoForm #memoId').val(key);
+    $('#memoForm #formType').val(type);
+  }
 }
 
 // OTHERS =========================================================-

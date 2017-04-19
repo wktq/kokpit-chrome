@@ -71,28 +71,12 @@
             <h5 class="DashBoard_col-title"><i class="icon ion-ios-list-outline"></i>&nbsp;タスクフィード</h5>
           </div>
           <div class="col s12 m3 DashBoard_col" id="DashBoard_col-2">
-            <h5 class="DashBoard_col-title"><i class="icon ion-document"></i>&nbsp;メモ</h5>
+            <h5 class="DashBoard_col-title">
+              <i class="icon ion-document"></i>&nbsp;メモ
+              <a class="DashBoard_col-button" id="addMemoBtn"><i class="icon ion-plus"></i>&nbsp;メモを追加</a>
+            </h5>
             <div class="memos">
 
-            </div>
-            <div class="card">
-              <div class="row">
-                <form class="col s12" id="memoForm">
-                  <div class="row" style="margin-top: 12px; margin-bottom: 4px;">
-                    <div class="input-field col s12">
-                      <input placeholder="買い物リスト" id="memoTitle" type="text" class="validate" style="margin-bottom: 4px;">
-                      <label for="first_name">メモのタイトル</label>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <textarea id="memoContent" class="materialize-textarea" placeholder="USBを購入する" rows="10" style="margin-bottom: 0px;"></textarea>
-                      <label for="textarea1">メモの内容</label>
-                    </div>
-                  </div>
-                  <a class="waves-effect waves-light btn" id="addMemoBtn" style="display: block">メモを追加</a>
-                </form>
-              </div>
             </div>
           </div>
           <div class="col s12 m6 DashBoard_col" id="DashBoard_col-3" style="padding: 0px;">
@@ -177,7 +161,7 @@
     <div id="memoModal" class="formModal">
       <div class="card">
         <div class="row">
-          <form class="col s12" id="memoUpdateForm">
+          <form class="col s12" id="memoForm">
             <div class="row" style="margin-top: 12px; margin-bottom: 4px;">
               <div class="input-field col s12">
                 <input placeholder="買い物リスト" id="memoTitle" type="text" class="validate" style="margin-bottom: 4px;">
@@ -190,7 +174,9 @@
                 <label for="textarea1" class="active">メモの内容</label>
               </div>
             </div>
-            <a class="waves-effect waves-light btn" id="updateMemoBtn" style="display: block">メモを追加</a>
+            <input type="hidden" id="formType" name="" value="">
+            <input type="hidden" id="memoId" name="" value="">
+            <a class="waves-effect waves-light btn" id="memoFormBtn" style="display: block">メモを追加</a>
           </form>
         </div>
       </div>

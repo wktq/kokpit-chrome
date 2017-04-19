@@ -79,6 +79,9 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   .formModal .card {
     width: 600px;
     margin: 10vh auto; }
+    .formModal .card textarea {
+      height: 480px;
+      overflow-y: scroll; }
 
 .main {
   width: calc(100% - 240px);
@@ -215,10 +218,18 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     .projectScreen .projectScreen_action .projectScreen_action-removeBtn, .projectScreen .projectScreen_action .projectScreen_action-deleteTaskBtn, .DashBoard .projectScreen_action .projectScreen_action-removeBtn, .DashBoard .projectScreen_action .projectScreen_action-deleteTaskBtn {
       color: red; }
 
-.DashBoard .DashBoard_col .DashBoard_col-title {
-  text-align: center;
-  font-size: 16px;
-  margin-bottom: 16px; }
+.DashBoard .DashBoard_col {
+  position: relative; }
+  .DashBoard .DashBoard_col .DashBoard_col-title {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 16px; }
+  .DashBoard .DashBoard_col .DashBoard_col-button {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 12px;
+    cursor: pointer; }
 
 .DashCard {
   cursor: pointer; }
